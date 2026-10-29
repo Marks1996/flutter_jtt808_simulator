@@ -49,7 +49,10 @@ ShadThemeData _workbenchTheme(ThemeData material) {
       list: text.bodyMedium,
       lead: text.bodyLarge,
       small: text.labelLarge,
-    ),
+      muted: ShadTextTheme(
+        family: 'IBM Plex Sans',
+      ).muted.copyWith(fontWeight: text.bodySmall?.fontWeight),
+    ).apply(fontFamilyFallback: text.bodyMedium?.fontFamilyFallback),
   );
 }
 

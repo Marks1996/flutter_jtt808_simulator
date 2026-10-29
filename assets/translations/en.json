@@ -1,5 +1,8 @@
 {
   "window": {
+    "debug_title": "Debug appearance",
+    "debug_help": "Preview only; native actions use the host OS. Resets on restart.",
+    "style": "Window style",
     "minimize": "Minimize",
     "maximize": "Maximize",
     "restore": "Restore window",

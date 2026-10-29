@@ -31,7 +31,9 @@ class DesktopWindowService {
     );
     if (!useNativeTitleBar) await windowManager.setAsFrameless();
     await windowManager.setResizable(true);
-    if (PlatformInfo.isMacOS) await windowManager.setHasShadow(true);
+    if (PlatformInfo.isMacOS || PlatformInfo.isWindows) {
+      await windowManager.setHasShadow(true);
+    }
   }
 
   /// Called after Flutter has rendered the custom frame, avoiding native chrome

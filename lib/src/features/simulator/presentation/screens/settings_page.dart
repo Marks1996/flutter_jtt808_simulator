@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import '../../../../services/desktop_window_service.dart';
+import '../../../../shared/widgets/desktop_window_frame.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/simulator_provider.dart';
@@ -66,6 +69,37 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
       ),
+      if (kDebugMode && DesktopWindowService.isSupported)
+        _SettingsSection(
+          title: tr('window.debug_title'),
+          description: tr('window.debug_help'),
+          child: SizedBox(
+            width: 220,
+            child: ValueListenableBuilder(
+              valueListenable: debugWindowStyle,
+              builder: (context, value, child) => SimSelect<String>(
+                label: tr('window.style'),
+                value: value?.name ?? 'system',
+                items: [
+                  SimOption(
+                    value: 'system',
+                    child: Text(tr('sim.theme_mode.system')),
+                  ),
+                  const SimOption(value: 'macOS', child: Text('macOS')),
+                  const SimOption(value: 'windows', child: Text('Windows')),
+                ],
+                onChanged: (value) {
+                  if (value == null) return;
+                  debugWindowStyle.value = switch (value) {
+                    'macOS' => TargetPlatform.macOS,
+                    'windows' => TargetPlatform.windows,
+                    _ => null,
+                  };
+                },
+              ),
+            ),
+          ),
+        ),
       _SettingsSection(
         title: tr('sim.workspace'),
         description: tr('sim.workspace_help'),

@@ -31,6 +31,7 @@ analyzer:
     - android/**
     - ios/**
     - macos/**
+    - windows/**
   strong-mode:
     implicit-casts: true
     implicit-dynamic: false

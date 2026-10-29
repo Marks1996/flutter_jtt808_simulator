@@ -29,7 +29,7 @@ fvm flutter run -d macos
 
 没有 FVM 时，在标准 Flutter 3.44.8 环境执行对应 `flutter` 命令即可。若镜像源超时，可将该条命令的 `PUB_HOSTED_URL` 设为 `https://pub.dev`。
 
-已生成 macOS、Android、iOS 工程。Android 可执行 `fvm flutter run -d <device-id>`；iOS 需要 Xcode、原生依赖下载和适当的签名配置。Windows/Linux 工程需在相应环境用 Flutter 官方命令生成，本次未验证其原生构建。
+已生成 macOS、Android、iOS、Windows 工程。Windows 可执行 `fvm flutter run -d windows`；Android 可执行 `fvm flutter run -d <device-id>`；iOS 需要 Xcode、原生依赖下载和适当的签名配置。Linux 工程需在相应环境用 Flutter 官方命令生成。
 
 ### 本地联调
 

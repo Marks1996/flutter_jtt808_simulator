@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../services/desktop_window_service.dart';
 import '../../../../shared/app_assets.dart';
+import '../../../../shared/widgets/desktop_window_frame.dart';
 import '../providers/simulator_provider.dart';
 import '../widgets/sim_ui.dart';
 import 'console_page.dart';
@@ -256,29 +257,24 @@ class _SimulatorScreenState extends ConsumerState<SimulatorScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                collapsed ? 8 : 16,
-                12,
-                collapsed ? 8 : 12,
-                18,
-              ),
-              child: collapsed
-                  ? ShadTooltip(
-                      builder: (_) => Text(tr('sim.app_name')),
-                      child: ClipRRect(
-                        borderRadius: AppBorders.sm,
-                        child: Image.asset(
-                          AppAssets.logo,
-                          width: 32,
-                          height: 32,
-                          excludeFromSemantics: true,
-                        ),
-                      ),
-                    )
-                  : Row(
-                      children: [
-                        ClipRRect(
+            ValueListenableBuilder(
+              valueListenable: debugWindowStyle,
+              builder: (context, value, child) =>
+                  DesktopWindowService.isSupported &&
+                      windowStyle == TargetPlatform.windows
+                  ? SizedBox(height: SimSpace.xs)
+                  : child!,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  collapsed ? 8 : 16,
+                  12,
+                  collapsed ? 8 : 12,
+                  18,
+                ),
+                child: collapsed
+                    ? ShadTooltip(
+                        builder: (_) => Text(tr('sim.app_name')),
+                        child: ClipRRect(
                           borderRadius: AppBorders.sm,
                           child: Image.asset(
                             AppAssets.logo,
@@ -287,29 +283,42 @@ class _SimulatorScreenState extends ConsumerState<SimulatorScreen> {
                             excludeFromSemantics: true,
                           ),
                         ),
-                        SizedBox(width: SimSpace.sm),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                tr('sim.app_name'),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: context.textTheme.titleMedium,
-                              ),
-                              SizedBox(height: SimSpace.xs),
-                              Text(
-                                tr('sim.local_workspace'),
-                                style: context.textTheme.bodySmall?.copyWith(
-                                  color: context.colors.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
+                      )
+                    : Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: AppBorders.sm,
+                            child: Image.asset(
+                              AppAssets.logo,
+                              width: 32,
+                              height: 32,
+                              excludeFromSemantics: true,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                          SizedBox(width: SimSpace.sm),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  tr('sim.app_name'),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: context.textTheme.titleMedium,
+                                ),
+                                SizedBox(height: SimSpace.xs),
+                                Text(
+                                  tr('sim.local_workspace'),
+                                  style: context.textTheme.bodySmall?.copyWith(
+                                    color: context.colors.onSurfaceVariant,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
             ),
             for (var i = 0; i < _nav.length - 1; i++) item(i),
             const Spacer(),

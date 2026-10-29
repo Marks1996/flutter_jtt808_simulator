@@ -39,9 +39,20 @@ fvm flutter build ios --simulator --debug
 
 当前 SDK 使用 Swift Package Manager。`file_picker` 需要从 GitHub 拉取 `zhangao0086/DKImagePickerController`。本次此步骤在完整网络权限下仍超时，iOS 构建未完成。请先确保 Xcode/git 能访问该仓库，再重跑；不要把网络依赖失败解释为已经通过真机验证。
 
-## Windows / Linux
+## Windows
 
-本次 macOS 主机没有生成或验证这些平台的工程。若需要这些目标，请在对应开发环境执行 Flutter 官方 `flutter create --platforms=windows .` / `flutter create --platforms=linux .`，再进行平台依赖及 TCP/文件操作验证。应用核心 Dart 代码不依赖 macOS 专用协议实现。
+已生成 Windows 桌面工程。使用项目 FVM SDK，在安装 Visual Studio 的“使用 C++ 的桌面开发”工作负载后运行：
+
+```bash
+fvm flutter run -d windows
+fvm flutter build windows --debug
+```
+
+已在 Windows 上通过 Debug 构建、静态分析及 119 项测试。CMake 显式使用 UTF-8 编译源码，避免中文系统代码页引发插件 C4819 错误。
+
+## Linux
+
+尚未生成或验证 Linux 工程。若需要此目标，请在对应开发环境执行 Flutter 官方 `flutter create --platforms=linux .`，再进行平台依赖及 TCP/文件操作验证。应用核心 Dart 代码不依赖 macOS 专用协议实现。
 
 ## 调试与测试
 

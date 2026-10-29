@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -13,6 +14,11 @@ import '../../utils/async_state.dart';
 import '../../utils/failure.dart';
 import '../../utils/logger.dart';
 import '../../utils/platform_info.dart';
+
+/// Debug visual override; native operations always use the host OS.
+final debugWindowStyle = ValueNotifier<TargetPlatform?>(null);
+TargetPlatform get windowStyle =>
+    (kDebugMode ? debugWindowStyle.value : null) ?? defaultTargetPlatform;
 
 /// Application-wide native chrome, independent of responsive content width.
 /// The local overlay lets title-bar tooltips work above the router's navigator.
@@ -146,10 +152,14 @@ class _DesktopWindowFrameState extends State<DesktopWindowFrame>
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => ValueListenableBuilder(
+    valueListenable: debugWindowStyle,
+    builder: (context, value, child) => _buildFrame(context),
+  );
+  Widget _buildFrame(BuildContext context) {
     if (!DesktopWindowService.isSupported) return widget.child;
     final expanded = _maximized || _fullScreen;
-    if (PlatformInfo.isMacOS) {
+    if (PlatformInfo.isMacOS && windowStyle == TargetPlatform.macOS) {
       // Hidden-inset style (reference: cursor-byok's MacTitleBarHiddenInset
       // window): the content fills the whole window, the native traffic lights
       // float above it, and an invisible strip along the top carries the drag
@@ -205,6 +215,7 @@ class _DesktopWindowFrameState extends State<DesktopWindowFrame>
           child: Column(
             children: [
               DesktopWindowBar(
+                macStyle: windowStyle == TargetPlatform.macOS,
                 focused: _focused,
                 maximized: _maximized,
                 fullScreen: _fullScreen,
@@ -265,6 +276,7 @@ class DesktopWindowBar extends StatelessWidget {
     required this.onToggleMaximize,
     required this.onMinimize,
     required this.onClose,
+    this.macStyle = false,
     this.focused = true,
     this.maximized = false,
     this.fullScreen = false,
@@ -273,21 +285,55 @@ class DesktopWindowBar extends StatelessWidget {
 
   final VoidCallback onDrag, onToggleMaximize, onMinimize, onClose;
   final bool focused, maximized, fullScreen, enabled;
+  final bool macStyle;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final foreground = focused ? colors.onSurface : colors.onSurfaceVariant;
-    return DecoratedBox(
+    return SizedBox(
       key: const ValueKey('desktop-window-bar'),
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: colors.outlineVariant)),
-      ),
       child: SizedBox(
-        height: AppSpacing.xxl,
+        height: AppSpacing.xl,
         child: Row(
           children: [
-            SizedBox(width: AppSpacing.xs),
+            SizedBox(width: AppSpacing.sm),
+            if (macStyle) ...[
+              for (final control in [
+                (tr('window.close'), colors.error, onClose),
+                (tr('window.minimize'), context.appColors.warning, onMinimize),
+                (
+                  tr('window.maximize'),
+                  context.appColors.success,
+                  onToggleMaximize,
+                ),
+              ])
+                Padding(
+                  padding: EdgeInsets.only(right: AppSpacing.sm),
+                  child: ShadTooltip(
+                    builder: (_) => Text(control.$1),
+                    child: Semantics(
+                      label: control.$1,
+                      button: true,
+                      child: ShadButton.ghost(
+                        width: AppSpacing.ml,
+                        height: AppSpacing.lg,
+                        padding: EdgeInsets.zero,
+                        enabled: enabled,
+                        onPressed: control.$3,
+                        child: Container(
+                          width: AppSpacing.ms,
+                          height: AppSpacing.ms,
+                          decoration: BoxDecoration(
+                            color: control.$2,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
             Expanded(
               child: GestureDetector(
                 key: const ValueKey('window-drag-area'),
@@ -299,68 +345,64 @@ class DesktopWindowBar extends StatelessWidget {
                   child: LayoutBuilder(
                     builder: (context, constraints) => Row(
                       children: [
-                        Image.asset(
-                          AppAssets.logo,
-                          width: 20,
-                          height: 20,
-                          excludeFromSemantics: true,
-                        ),
+                        if (!macStyle)
+                          Image.asset(
+                            AppAssets.logo,
+                            width: 20,
+                            height: 20,
+                            excludeFromSemantics: true,
+                          ),
                         SizedBox(width: AppSpacing.sm),
-                        Flexible(
-                          child: Text(
-                            tr('sim.app_name'),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: context.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: foreground,
+                        if (!macStyle)
+                          Flexible(
+                            child: Text(
+                              tr('sim.app_name'),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: foreground,
+                              ),
                             ),
                           ),
-                        ),
-                        if (constraints.maxWidth >= 520) ...[
-                          SizedBox(width: AppSpacing.md),
-                          Text(
-                            tr('sim.local_workspace'),
-                            style: context.textTheme.bodySmall?.copyWith(
-                              color: colors.onSurfaceVariant,
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                   ),
                 ),
               ),
             ),
-            _WindowButton(
-              key: const ValueKey('window-minimize'),
-              label: tr('window.minimize'),
-              icon: Icons.remove_rounded,
-              onPressed: enabled ? onMinimize : null,
-            ),
-            _WindowButton(
-              key: const ValueKey('window-maximize'),
-              label: tr(
-                fullScreen
-                    ? 'window.exit_fullscreen'
-                    : maximized
-                    ? 'window.restore'
-                    : 'window.maximize',
+            if (!macStyle)
+              _WindowButton(
+                key: const ValueKey('window-minimize'),
+                label: tr('window.minimize'),
+                icon: Icons.remove_rounded,
+                onPressed: enabled ? onMinimize : null,
               ),
-              icon: fullScreen
-                  ? Icons.fullscreen_exit_rounded
-                  : maximized
-                  ? Icons.filter_none_rounded
-                  : Icons.crop_square_rounded,
-              onPressed: enabled ? onToggleMaximize : null,
-            ),
-            _WindowButton(
-              key: const ValueKey('window-close'),
-              label: tr('window.close'),
-              icon: Icons.close_rounded,
-              destructive: true,
-              onPressed: enabled ? onClose : null,
-            ),
+            if (!macStyle)
+              _WindowButton(
+                key: const ValueKey('window-maximize'),
+                label: tr(
+                  fullScreen
+                      ? 'window.exit_fullscreen'
+                      : maximized
+                      ? 'window.restore'
+                      : 'window.maximize',
+                ),
+                icon: fullScreen
+                    ? Icons.fullscreen_exit_rounded
+                    : maximized
+                    ? Icons.filter_none_rounded
+                    : Icons.crop_square_rounded,
+                onPressed: enabled ? onToggleMaximize : null,
+              ),
+            if (!macStyle)
+              _WindowButton(
+                key: const ValueKey('window-close'),
+                label: tr('window.close'),
+                icon: Icons.close_rounded,
+                destructive: true,
+                onPressed: enabled ? onClose : null,
+              ),
             SizedBox(width: AppSpacing.xs),
           ],
         ),

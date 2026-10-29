@@ -240,12 +240,31 @@ void main() {
           tester
               .getSize(find.byKey(const ValueKey('desktop-window-bar')))
               .height,
-          48,
+          32,
         );
         expect(tester.takeException(), isNull);
       },
     );
   }
+
+  _windowTest(
+    'debug chrome switches on Windows without changing native platform',
+    (tester) async {
+      addTearDown(() => debugWindowStyle.value = null);
+      await _pump(tester, platform: TargetPlatform.windows);
+      expect(find.byKey(const ValueKey('window-close')), findsOneWidget);
+      debugWindowStyle.value = TargetPlatform.macOS;
+      await tester.pumpAndSettle();
+      expect(defaultTargetPlatform, TargetPlatform.windows);
+      expect(find.byKey(const ValueKey('window-close')), findsNothing);
+      expect(_captionLabel('Close window'), findsOneWidget);
+      expect(find.text('Page content'), findsOneWidget);
+      debugWindowStyle.value = TargetPlatform.windows;
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('window-close')), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   _windowTest('macOS renders a borderless hidden-inset title area', (
     tester,

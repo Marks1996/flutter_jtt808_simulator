@@ -94,3 +94,6 @@ Desktop.ini
 
 # Keep application dependency locks, SDK version, and generated Dart sources
 # versioned: pubspec.lock, .fvmrc, lib/**/*.g.dart.
+
+# FVM Version Cache
+.fvm/
