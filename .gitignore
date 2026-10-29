@@ -1,0 +1,96 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Local SDK links and optional private environment values
+/.fvm/
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system temporary files
+*.swo
+*~
+._*
+.AppleDouble/
+.LSOverride
+Thumbs.db
+Desktop.ini
+
+# Legacy Flutter metadata and local test reports
+.flutter-plugins
+.packages
+/test-results/
+/test-reports/
+
+# Local Android / Kotlin build caches (platform rules also apply)
+/android/.kotlin/
+/android/.idea/
+/android/build/
+
+# Apple build caches and per-user Xcode state
+**/DerivedData/
+**/xcuserdata/
+*.xcuserstate
+/ios/build/
+/macos/build/
+/macos/.symlinks/
+
+# Private signing material
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.mobileprovision
+/android/key.properties
+
+# Local generated artwork, previews, and backups
+/output/
+
+# Local code-search index
+/.codegraph/
+
+# Keep application dependency locks, SDK version, and generated Dart sources
+# versioned: pubspec.lock, .fvmrc, lib/**/*.g.dart.

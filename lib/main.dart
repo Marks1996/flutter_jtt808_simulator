@@ -1,0 +1,64 @@
+import 'dart:async';
+import 'dart:ui' as ui;
+import 'src/imports/core_imports.dart';
+import 'src/imports/packages_imports.dart';
+import 'src/app.dart';
+import 'src/services/desktop_window_service.dart';
+
+Future<void> main() async {
+  await runZonedGuarded(_bootstrap, (error, stackTrace) {
+    AppLogger.error(
+      'Unhandled asynchronous error',
+      error: error,
+      stackTrace: stackTrace,
+      category: LogCategory.app,
+    );
+  });
+}
+
+Future<void> _bootstrap() async {
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  FlutterError.onError = (details) {
+    AppLogger.error(
+      'Flutter framework error',
+      error: details.exception,
+      stackTrace: details.stack ?? StackTrace.current,
+      category: LogCategory.app,
+      context: {'library': details.library ?? 'unknown'},
+    );
+    FlutterError.presentError(details);
+  };
+
+  ui.PlatformDispatcher.instance.onError = (error, stackTrace) {
+    AppLogger.error(
+      'Unhandled platform error',
+      error: error,
+      stackTrace: stackTrace,
+      category: LogCategory.app,
+    );
+    return false;
+  };
+
+  AppLogger.info('Application bootstrap started', category: LogCategory.app);
+
+  await EasyLocalization.ensureInitialized();
+  await dotenv.load(fileName: '.env.example', isOptional: true);
+
+  await AppConfig.init();
+  AppLogger.success(
+    'Application configuration initialized',
+    category: LogCategory.backend,
+  );
+  await HiveService.instance.init();
+  await DesktopWindowService.instance.initialize();
+
+  runApp(const LocalizationWrapper(child: StateWrapper(child: App())));
+
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    FlutterNativeSplash.remove();
+    await DesktopWindowService.instance.show();
+  });
+  AppLogger.success('Application started', category: LogCategory.app);
+}
