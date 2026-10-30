@@ -5,6 +5,11 @@ import '../utils/logger.dart';
 class DioLoggingInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // Route-planning URLs can contain precise stops and API credentials.
+    if (options.extra['privateRequest'] == true) {
+      handler.next(options);
+      return;
+    }
     options.extra['loggingStartedAt'] = DateTime.now();
     AppLogger.network(
       'HTTP request started',
@@ -18,6 +23,10 @@ class DioLoggingInterceptor extends Interceptor {
     Response<dynamic> response,
     ResponseInterceptorHandler handler,
   ) {
+    if (response.requestOptions.extra['privateRequest'] == true) {
+      handler.next(response);
+      return;
+    }
     final startedAt = response.requestOptions.extra['loggingStartedAt'];
     final durationMs = startedAt is DateTime
         ? DateTime.now().difference(startedAt).inMilliseconds
@@ -43,6 +52,10 @@ class DioLoggingInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    if (err.requestOptions.extra['privateRequest'] == true) {
+      handler.next(err);
+      return;
+    }
     final startedAt = err.requestOptions.extra['loggingStartedAt'];
     final durationMs = startedAt is DateTime
         ? DateTime.now().difference(startedAt).inMilliseconds

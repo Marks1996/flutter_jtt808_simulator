@@ -31,13 +31,12 @@ abstract final class SimSpace {
 }
 
 abstract final class SimStyle {
-  static const sheetRadius = BorderRadius.all(Radius.circular(12));
-  static const sectionRadius = BorderRadius.all(Radius.circular(8));
+  static const sectionRadius = AppBorders.card;
   static const controlRadius = BorderRadius.all(Radius.circular(6));
   static const double pageInset = 16;
   static const double controlHeight = 32;
   static const double touchHeight = 44;
-  static const double contentWidth = 1040;
+  static const double contentWidth = 1200;
 }
 
 TextStyle? simNumberStyle(BuildContext context) => context.textTheme.bodyMedium
@@ -82,6 +81,26 @@ String simError(Object error) {
     'invalid_workspace',
     'file_unreadable',
     'invalid_theme',
+    'invalid_tianditu_key',
+    'tianditu_key_required',
+    'invalid_basemap_key',
+    'basemap_endpoint_required',
+    'basemap_key_required',
+    'invalid_basemap',
+    'invalid_basemap_url',
+    'basemap_attribution_required',
+    'routing_amap_authorization',
+    'routing_rate',
+    'routing_settings',
+    'routing_url',
+    'routing_key',
+    'routing_points',
+    'routing_stale',
+    'routing_response',
+    'routing_no_route',
+    'routing_network',
+    'routing_limit',
+    'routing_cancelled',
   };
   return tr('sim.errors.${keys.contains(key) ? key : 'operation_failed'}');
 }
@@ -376,27 +395,69 @@ class SimPage extends StatelessWidget {
   final double maxWidth;
 
   @override
-  Widget build(BuildContext context) => ListView(
-    key: PageStorageKey(title),
-    padding: const EdgeInsets.all(SimStyle.pageInset),
-    children: [
-      for (final section in [
-        SimPageHeader(title: title, subtitle: subtitle, actions: actions),
-        SizedBox(height: SimSpace.lg),
-        for (var i = 0; i < children.length; i++) ...[
-          children[i],
-          if (i < children.length - 1) SizedBox(height: SimSpace.md),
-        ],
-      ])
-        Align(
-          alignment: Alignment.topLeft,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: maxWidth),
-            child: SizedBox(width: double.infinity, child: section),
+  Widget build(BuildContext context) {
+    // SafeArea consumes this inset on mobile. On desktop the viewport
+    // reaches the window edge, while only its initial content is inset.
+    final topInset = MediaQuery.paddingOf(context).top;
+    final scrollView = ListView(
+      key: PageStorageKey(title),
+      padding: EdgeInsets.fromLTRB(
+        SimStyle.pageInset,
+        SimStyle.pageInset + topInset,
+        SimStyle.pageInset,
+        SimStyle.pageInset,
+      ),
+      children: [
+        for (final section in [
+          SimPageHeader(title: title, subtitle: subtitle, actions: actions),
+          SizedBox(height: SimSpace.lg),
+          for (var i = 0; i < children.length; i++) ...[
+            children[i],
+            if (i < children.length - 1) SizedBox(height: SimSpace.md),
+          ],
+        ])
+          Align(
+            alignment: Alignment.topLeft,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: maxWidth),
+              child: SizedBox(width: double.infinity, child: section),
+            ),
+          ),
+      ],
+    );
+    if (topInset == 0) return scrollView;
+    final surface = context.colors.surface;
+    return Stack(
+      children: [
+        Positioned.fill(child: scrollView),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          height: topInset + SimStyle.pageInset,
+          child: IgnorePointer(
+            child: ExcludeSemantics(
+              child: DecoratedBox(
+                key: const ValueKey('sim-titlebar-fade'),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      surface,
+                      surface.withValues(alpha: .9),
+                      surface.withValues(alpha: 0),
+                    ],
+                    stops: const [0, .4, 1],
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
-    ],
-  );
+      ],
+    );
+  }
 }
 
 class SimPageHeader extends StatelessWidget {
@@ -415,12 +476,7 @@ class SimPageHeader extends StatelessWidget {
       final heading = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: context.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          Text(title, style: context.textTheme.headlineLarge),
           if (subtitle.isNotEmpty) ...[
             SizedBox(height: SimSpace.xs),
             Text(
@@ -480,47 +536,57 @@ class SimPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ShadCard(
-    backgroundColor: Colors.transparent,
-    border: ShadBorder.none,
+    backgroundColor: context.colors.surfaceContainerLow,
+    border: ShadBorder.all(color: context.colors.outlineVariant),
     radius: SimStyle.sectionRadius,
-    padding: padding ? EdgeInsets.only(bottom: SimSpace.ms) : EdgeInsets.zero,
+    padding: EdgeInsets.zero,
     columnCrossAxisAlignment: CrossAxisAlignment.stretch,
     shadows: const [],
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (title != null) ...[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title!,
-                      style: context.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    if (subtitle != null) ...[
-                      SizedBox(height: SimSpace.xs),
-                      Text(
-                        subtitle!,
-                        style: context.textTheme.bodySmall?.copyWith(
-                          color: context.colors.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+        if (title != null)
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: SimSpace.lg,
+              vertical: SimSpace.md,
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: context.colors.outlineVariant),
               ),
-              ?trailing,
-            ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title!, style: context.textTheme.titleMedium),
+                      if (subtitle != null) ...[
+                        SizedBox(height: SimSpace.xs),
+                        Text(
+                          subtitle!,
+                          style: context.textTheme.bodySmall?.copyWith(
+                            color: context.colors.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                if (trailing != null) ...[
+                  SizedBox(width: SimSpace.ms),
+                  trailing!,
+                ],
+              ],
+            ),
           ),
-          SizedBox(height: SimSpace.md),
-        ],
-        child,
+        Padding(
+          padding: padding ? EdgeInsets.all(SimSpace.lg) : EdgeInsets.zero,
+          child: child,
+        ),
       ],
     ),
   );

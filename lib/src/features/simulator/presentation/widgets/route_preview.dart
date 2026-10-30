@@ -3,42 +3,65 @@ import 'dart:math' as math;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart' show LatLng;
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../data/maps/basemap_source.dart';
+import '../../data/maps/map_coordinates.dart';
 import '../providers/simulator_provider.dart';
+import 'basemap_tile_layer.dart';
+import 'route_data_links.dart';
 import 'sim_ui.dart';
 
-/// An honest WGS84 coordinate plot by default. Online tiles are an explicit
-/// choice; a tile failure returns to the coordinate plot, not invented roads.
-class RoutePreview extends StatefulWidget {
+/// Uses the saved basemap preference, with a temporary offline fallback.
+/// Only display coordinates are converted; the supplied WGS84 data is immutable.
+class RoutePreview extends ConsumerStatefulWidget {
   const RoutePreview({super.key, this.route, this.location, this.height = 270});
   final DriveRoute? route;
   final LocationFix? location;
   final double height;
 
   @override
-  State<RoutePreview> createState() => _RoutePreviewState();
+  ConsumerState<RoutePreview> createState() => _RoutePreviewState();
 }
 
-class _RoutePreviewState extends State<RoutePreview> {
-  bool _online = false;
+class _RoutePreviewState extends ConsumerState<RoutePreview> {
   bool _tileFailed = false;
+  int _attempt = 0;
 
-  void _fallback() {
-    if (_tileFailed || !mounted) return;
+  @override
+  void initState() {
+    super.initState();
+    ref.listenManual(
+      simulatorProvider.select((controller) => controller.workspace.basemap),
+      (previous, next) => setState(() {
+        _tileFailed = false;
+        _attempt++;
+      }),
+    );
+  }
+
+  void _fallback(int attempt) {
+    if (_tileFailed || !mounted || attempt != _attempt) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        setState(() {
-          _tileFailed = true;
-          _online = false;
-        });
+      if (mounted && !_tileFailed && attempt == _attempt) {
+        setState(() => _tileFailed = true);
       }
     });
+    // Tile errors can arrive while the scheduler is idle. A post-frame
+    // callback alone would otherwise wait until the next user interaction.
+    WidgetsBinding.instance.ensureVisualUpdate();
   }
 
   @override
   Widget build(BuildContext context) {
+    final settings = ref.watch(
+      simulatorProvider.select((controller) => controller.workspace.basemap),
+    );
+    final source = BasemapSource(settings);
+    final online =
+        settings.enabled && settings.configurationKey == null && !_tileFailed;
     final points = [
       ...?widget.route?.points,
       if (widget.location != null) widget.location!,
@@ -50,37 +73,48 @@ class _RoutePreviewState extends State<RoutePreview> {
           children: [
             Expanded(
               child: Text(
-                tr(_online ? 'sim.map_online' : 'sim.map_offline'),
+                online
+                    ? tr(
+                        'sim.map_online',
+                        namedArgs: {
+                          'provider': tr(
+                            'sim.basemap_provider.${settings.provider.name}',
+                          ),
+                          'coordinates': source.coordinates,
+                        },
+                      )
+                    : tr('sim.map_offline'),
                 style: context.textTheme.labelMedium,
               ),
             ),
+            SizedBox(width: SimSpace.ms),
             ShadTooltip(
               builder: (_) => Text(tr('sim.map_online_hint')),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    tr('sim.online_basemap'),
-                    style: context.textTheme.bodySmall,
-                  ),
-                  ShadSwitch(
-                    enabled: points.isNotEmpty,
-                    value: _online,
-                    onChanged: points.isEmpty
-                        ? null
-                        : (value) {
-                            setState(() {
-                              _online = value;
-                              _tileFailed = false;
-                            });
-                          },
-                  ),
-                ],
+              child: ShadSwitch(
+                key: const ValueKey('preview-basemap-enabled'),
+                value: settings.enabled,
+                label: Text(
+                  tr('sim.online_basemap'),
+                  style: context.textTheme.bodySmall,
+                ),
+                onChanged: (value) => simRun(
+                  context,
+                  () => ref
+                      .read(simulatorProvider)
+                      .setBasemap(settings.copyWith(enabled: value)),
+                ),
               ),
             ),
           ],
         ),
         SizedBox(height: SimSpace.sm),
+        if (settings.enabled && settings.configurationKey != null) ...[
+          SimNotice(
+            key: const ValueKey('basemap-setup-required'),
+            text: tr('sim.errors.${settings.configurationKey}'),
+          ),
+          SizedBox(height: SimSpace.sm),
+        ],
         ClipRRect(
           borderRadius: AppBorders.input,
           child: SizedBox(
@@ -95,47 +129,47 @@ class _RoutePreviewState extends State<RoutePreview> {
                       ),
                     ),
                   )
-                : _online
-                ? _tiles(context, points)
-                : ColoredBox(
-                    color: context.colors.surfaceContainerLow,
-                    child: Semantics(
-                      label: tr('sim.coordinate_plot'),
-                      child: CustomPaint(
-                        painter: _CoordinatePainter(
-                          route: widget.route?.points ?? const [],
-                          location: widget.location,
-                          line: context.colors.primary,
-                          grid: context.colors.outlineVariant.withValues(
-                            alpha: .6,
-                          ),
-                          markerBorder: context.colors.surface,
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(SimSpace.ms),
-                            child: Text(
-                              tr(
-                                'sim.plot_bounds',
-                                namedArgs: {
-                                  'lat':
-                                      '${points.map((p) => p.latitude).reduce(math.min).toStringAsFixed(5)} … ${points.map((p) => p.latitude).reduce(math.max).toStringAsFixed(5)}',
-                                  'lon':
-                                      '${points.map((p) => p.longitude).reduce(math.min).toStringAsFixed(5)} … ${points.map((p) => p.longitude).reduce(math.max).toStringAsFixed(5)}',
-                                },
-                              ),
-                              style: context.textTheme.bodySmall?.copyWith(
-                                color: context.colors.onSurfaceVariant,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                : online
+                ? _tiles(context, points, source)
+                : _plot(context, points),
           ),
         ),
+        if (online && points.isNotEmpty) ...[
+          SizedBox(height: SimSpace.sm),
+          // Keep attribution visible, rather than behind an information toggle.
+          if (source.attributionUrl case final url?)
+            ShadButton.link(
+              height: 0,
+              expands: true,
+              padding: EdgeInsets.zero,
+              mainAxisAlignment: MainAxisAlignment.start,
+              onPressed: () => simRun(context, () async {
+                if (!await launchUrl(
+                  url,
+                  mode: LaunchMode.externalApplication,
+                )) {
+                  throw StateError('Unable to open attribution');
+                }
+              }),
+              child: Text(
+                tr(source.attributionKey!),
+                style: context.textTheme.bodySmall,
+              ),
+            )
+          else
+            Text(
+              settings.customAttribution,
+              style: context.textTheme.bodySmall,
+            ),
+        ],
+        if (widget.route?.planning case final origin?) ...[
+          SizedBox(height: SimSpace.sm),
+          Text(
+            tr('sim.routing.attribution.${origin.provider.name}'),
+            style: context.textTheme.bodySmall,
+          ),
+          if (origin.provider == RoutingProvider.osrm) const RouteDataLinks(),
+        ],
         SizedBox(height: SimSpace.sm),
         Text(
           tr('sim.map_disclaimer'),
@@ -146,19 +180,77 @@ class _RoutePreviewState extends State<RoutePreview> {
         if (_tileFailed) ...[
           SizedBox(height: SimSpace.sm),
           SimNotice(text: tr('sim.map_failed'), error: true),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: ShadButton.outline(
+              key: const ValueKey('retry-basemap'),
+              size: ShadButtonSize.sm,
+              onPressed: () => setState(() {
+                _tileFailed = false;
+                _attempt++;
+              }),
+              child: Text(tr('sim.retry_basemap')),
+            ),
+          ),
         ],
       ],
     );
   }
 
-  Widget _tiles(BuildContext context, List<LocationFix> points) {
-    final coordinates = points
-        .map((p) => LatLng(p.latitude, p.longitude))
-        .toList();
+  Widget _plot(BuildContext context, List<LocationFix> points) => ColoredBox(
+    color: context.colors.surfaceContainerLow,
+    child: Semantics(
+      label: tr('sim.coordinate_plot'),
+      child: CustomPaint(
+        painter: _CoordinatePainter(
+          route: widget.route?.points ?? const [],
+          location: widget.location,
+          line: context.colors.primary,
+          grid: context.colors.outlineVariant.withValues(alpha: .6),
+          markerBorder: context.colors.surface,
+        ),
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: Padding(
+            padding: EdgeInsets.all(SimSpace.ms),
+            child: Text(
+              tr(
+                'sim.plot_bounds',
+                namedArgs: {
+                  'lat':
+                      '${points.map((p) => p.latitude).reduce(math.min).toStringAsFixed(5)} … ${points.map((p) => p.latitude).reduce(math.max).toStringAsFixed(5)}',
+                  'lon':
+                      '${points.map((p) => p.longitude).reduce(math.min).toStringAsFixed(5)} … ${points.map((p) => p.longitude).reduce(math.max).toStringAsFixed(5)}',
+                },
+              ),
+              style: context.textTheme.bodySmall?.copyWith(
+                color: context.colors.onSurfaceVariant,
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  Widget _tiles(
+    BuildContext context,
+    List<LocationFix> points,
+    BasemapSource source,
+  ) {
+    LatLng project(LocationFix point) => basemapCoordinates(
+      LatLng(point.latitude, point.longitude),
+      source.settings,
+    );
+    final coordinates = points.map(project).toList();
     final unique = coordinates.map((p) => (p.latitude, p.longitude)).toSet();
+    final attempt = _attempt;
     return FlutterMap(
-      key: ValueKey(widget.route?.id ?? 'position'),
+      key: ValueKey((widget.route?.id ?? 'position', source.settings, attempt)),
       options: MapOptions(
+        crs: source.crs,
+        minZoom: 3,
+        maxZoom: source.maxZoom,
         initialCenter: coordinates.first,
         initialZoom: 14,
         initialCameraFit: unique.length < 2
@@ -173,18 +265,12 @@ class _RoutePreviewState extends State<RoutePreview> {
         ),
       ),
       children: [
-        TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'com.marks.flutter_jtt808_simulator',
-          errorTileCallback: (tile, error, stack) => _fallback(),
-        ),
+        BasemapTileLayer(source: source, onError: () => _fallback(attempt)),
         if (widget.route != null)
           PolylineLayer(
             polylines: [
               Polyline(
-                points: widget.route!.points
-                    .map((p) => LatLng(p.latitude, p.longitude))
-                    .toList(),
+                points: widget.route!.points.map(project).toList(),
                 color: context.colors.primary,
                 strokeWidth: 3,
               ),
@@ -194,7 +280,7 @@ class _RoutePreviewState extends State<RoutePreview> {
           MarkerLayer(
             markers: [
               Marker(
-                point: LatLng(point.latitude, point.longitude),
+                point: project(point),
                 width: 24,
                 height: 24,
                 child: Icon(
@@ -205,20 +291,6 @@ class _RoutePreviewState extends State<RoutePreview> {
               ),
             ],
           ),
-        RichAttributionWidget(
-          attributions: [
-            TextSourceAttribution(
-              tr('sim.osm_attribution'),
-              onTap: () => simRun(context, () async {
-                if (!await launchUrl(
-                  Uri.parse('https://www.openstreetmap.org/copyright'),
-                )) {
-                  throw StateError('Unable to open attribution');
-                }
-              }),
-            ),
-          ],
-        ),
       ],
     );
   }

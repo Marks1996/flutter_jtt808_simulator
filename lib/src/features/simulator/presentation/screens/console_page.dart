@@ -296,7 +296,7 @@ class ConsolePage extends StatelessWidget {
           ] else
             SimExpansion(
               title: Text(
-                tr('sim.map_offline'),
+                tr('sim.map_preview'),
                 style: context.textTheme.bodySmall,
               ),
               tilePadding: EdgeInsets.zero,
@@ -450,26 +450,61 @@ class _Statistics extends StatelessWidget {
   const _Statistics({required this.controller});
   final SimulatorController controller;
   @override
-  Widget build(BuildContext context) => Wrap(
-    spacing: SimSpace.lg,
-    runSpacing: SimSpace.xs,
-    children: [
-      for (final (label, value) in [
-        (
-          tr('sim.online_terminals'),
-          '${controller.onlineCount} / ${controller.terminals.length}',
-        ),
-        (tr('sim.running_tasks'), '${controller.runningCount}'),
-        (tr('sim.messages_sent'), '${controller.sentCount}'),
-        (tr('sim.messages_received'), '${controller.receivedCount}'),
-      ])
-        Text(
-          '$label  $value',
-          style: context.textTheme.bodySmall?.copyWith(
-            color: context.colors.onSurfaceVariant,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
-        ),
-    ],
-  );
+  Widget build(BuildContext context) {
+    final readings = [
+      (
+        tr('sim.online_terminals'),
+        '${controller.onlineCount} / ${controller.terminals.length}',
+      ),
+      (tr('sim.running_tasks'), '${controller.runningCount}'),
+      (tr('sim.messages_sent'), '${controller.sentCount}'),
+      (tr('sim.messages_received'), '${controller.receivedCount}'),
+    ];
+    return SimPanel(
+      key: const ValueKey('console-statistics'),
+      padding: false,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final columns = constraints.maxWidth < 560 ? 2 : 4;
+          return Wrap(
+            children: [
+              for (var i = 0; i < readings.length; i++)
+                Container(
+                  width: constraints.maxWidth / columns,
+                  padding: EdgeInsets.all(SimSpace.lg),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      right: i % columns < columns - 1
+                          ? BorderSide(color: context.colors.outlineVariant)
+                          : BorderSide.none,
+                      bottom: i < readings.length - columns
+                          ? BorderSide(color: context.colors.outlineVariant)
+                          : BorderSide.none,
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        readings[i].$1,
+                        style: context.textTheme.bodySmall?.copyWith(
+                          color: context.colors.onSurfaceVariant,
+                        ),
+                      ),
+                      SizedBox(height: SimSpace.md),
+                      Text(
+                        readings[i].$2,
+                        style: context.textTheme.headlineLarge?.copyWith(
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 }

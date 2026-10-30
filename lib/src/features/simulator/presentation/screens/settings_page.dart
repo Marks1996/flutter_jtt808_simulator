@@ -6,6 +6,8 @@ import '../../../../shared/widgets/desktop_window_frame.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/simulator_provider.dart';
+import '../widgets/basemap_settings_form.dart';
+import '../widgets/routing_settings_form.dart';
 import '../widgets/sim_ui.dart';
 import '../widgets/workspace_transfer_dialog.dart';
 
@@ -17,11 +19,9 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) => SimPage(
     title: tr('sim.settings'),
     subtitle: '',
-    maxWidth: 960,
     children: [
-      _SettingsSection(
+      SimPanel(
         title: tr('sim.appearance_language'),
-        first: true,
         child: LayoutBuilder(
           builder: (context, constraints) => Wrap(
             spacing: SimSpace.lg,
@@ -69,10 +69,12 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
       ),
+      BasemapSettingsForm(controller: controller),
+      RoutingSettingsForm(controller: controller),
       if (kDebugMode && DesktopWindowService.isSupported)
-        _SettingsSection(
+        SimPanel(
           title: tr('window.debug_title'),
-          description: tr('window.debug_help'),
+          subtitle: tr('window.debug_help'),
           child: SizedBox(
             width: 220,
             child: ValueListenableBuilder(
@@ -100,19 +102,11 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
         ),
-      _SettingsSection(
+      SimPanel(
         title: tr('sim.workspace'),
-        description: tr('sim.workspace_help'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              tr('sim.workspace_contents'),
-              style: context.textTheme.bodySmall?.copyWith(
-                color: context.colors.onSurfaceVariant,
-              ),
-            ),
-            SizedBox(height: SimSpace.xs),
             Text(
               tr(
                 'sim.workspace_counts',
@@ -159,7 +153,7 @@ class SettingsPage extends StatelessWidget {
           ],
         ),
       ),
-      _SettingsSection(
+      SimPanel(
         title: tr('sim.support_scope'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,14 +172,14 @@ class SettingsPage extends StatelessWidget {
           ],
         ),
       ),
-      _SettingsSection(
+      SimPanel(
         title: tr('sim.coordinate_policy'),
         child: Text(
           tr('sim.coordinate_policy_body'),
           style: context.textTheme.bodyMedium,
         ),
       ),
-      _SettingsSection(
+      SimPanel(
         title: tr('sim.references'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,12 +199,15 @@ class SettingsPage extends StatelessWidget {
               'reference_osm',
               'https://www.openstreetmap.org/copyright',
             ),
-            SizedBox(height: SimSpace.ms),
-            Text(
-              tr('sim.reference_disclaimer'),
-              style: context.textTheme.bodySmall?.copyWith(
-                color: context.colors.onSurfaceVariant,
-              ),
+            _link(
+              context,
+              'reference_amap',
+              'https://lbs.amap.com/pages/terms',
+            ),
+            _link(
+              context,
+              'reference_baidu',
+              'https://lbsyun.baidu.com/index.php?title=open/law',
             ),
           ],
         ),
@@ -245,79 +242,4 @@ class SettingsPage extends StatelessWidget {
           }
         }),
       );
-}
-
-class _SettingsSection extends StatelessWidget {
-  const _SettingsSection({
-    required this.title,
-    required this.child,
-    this.description,
-    this.first = false,
-  });
-
-  final String title;
-  final String? description;
-  final Widget child;
-  final bool first;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: EdgeInsets.only(
-      top: first ? SimSpace.ms : SimSpace.xl,
-      bottom: SimSpace.ms,
-    ),
-    decoration: BoxDecoration(
-      border: first
-          ? null
-          : Border(top: BorderSide(color: context.colors.outlineVariant)),
-    ),
-    child: LayoutBuilder(
-      builder: (context, constraints) {
-        final label = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: context.textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            if (description != null) ...[
-              SizedBox(height: SimSpace.ms),
-              Text(
-                description!,
-                style: context.textTheme.bodySmall?.copyWith(
-                  color: context.colors.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ],
-        );
-        final content = ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 620),
-          child: child,
-        );
-        if (constraints.maxWidth < 720) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              label,
-              SizedBox(height: SimSpace.md),
-              content,
-            ],
-          );
-        }
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(width: 240, child: label),
-            SizedBox(width: SimSpace.xl),
-            Expanded(
-              child: Align(alignment: Alignment.topLeft, child: content),
-            ),
-          ],
-        );
-      },
-    ),
-  );
 }

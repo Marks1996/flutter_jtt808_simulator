@@ -8,26 +8,28 @@
 - **终端管理**：多终端新增/修改/删除，服务器、12 位手机号、注册身份、GBK 车牌、鉴权码、上报间隔；批量连接/断开。没有宣称经过大规模并发压测。
 - **完整会话**：TCP → 注册 → 保存鉴权码 → 鉴权成功后在线；已有鉴权码直接鉴权；拒绝、超时和远端断线可见。自动重连默认关闭，可选开启，手动断开会取消。
 - **位置与报警**：WGS84 经纬度、速度、海拔、方向、里程，ACC/定位与常见报警开关、完整 32 位 HEX 标志。行驶中仍可修改报警/状态，坐标由任务推进。南西半球标志与实际坐标自动保持一致。
-- **线路与任务**：CSV 新增/编辑/文件或剪贴板导入/导出、离线坐标预览、按速度和真实经过时间推进、循环、暂停/继续/停止；累计里程保留起始值。
+- **线路与任务**：支持地图可视化选点、起终点与途经点调整，接入可配置的 OSRM 和高德官方驾车路径规划；保留 WGS84 CSV 编辑/导入/导出、轨迹预览、按速度和真实经过时间回放、循环、暂停/继续/停止。规划结果保持 WGS84，累计里程保留起始值。接入与授权说明见 [docs/ROUTE_PLANNING.md](docs/ROUTE_PLANNING.md)。
 - **协议日志**：收发方向、终端/消息 ID/HEX 搜索、报文详情、冻结显示、清除、复制和 JSON 导出；最近 2000 条保存在内存，累计计数不受日志裁剪影响。
 - **本地工作区**：Hive 保存终端、鉴权码、线路、任务定义和主题；导入覆盖前确认；保存失败可重试；读取失败不覆盖原数据。重启和导入均不会自动连接或运行任务。
 - **UI**：中英文、浅色/深色/跟随系统，桌面侧栏与移动底部导航，空/错/禁用状态。按 Impeccable Operate 和 Taste Skill 应用界面规范设计，没有虚构在线设备或统计。
-- **地图**：默认离线 WGS84 坐标轨迹；在线 OpenStreetMap 底图需主动开启，带归属标识，失败回退离线。示例折线不是道路规划。
+- **地图**：中国大陆接入默认选择天地图官方底图与中文注记，配置自有 Key 后加载；未配置时明确提示且不发送瓦片请求。高德为默认驾车规划服务，Key 与地图 Key 分别配置。已有 OSM/OSRM 选择、授权高德/百度图源及自定义地址保留，不强制覆盖；天地图/高德/百度分别保存可空 Key，OSM/OSRM 使用自定义连接地址。所有线路与 JT808 上报保持 WGS84，加载失败可离线查看。配置入口与大陆实网验收清单见 [docs/CHINA_ACCESS.md](docs/CHINA_ACCESS.md)，图源比较见 [docs/BASEMAPS.md](docs/BASEMAPS.md)。
 
 停止任务后终端仍可在线并上报静止位置；**断开连接**才停止该终端的通信与重连。
 
+另提供 **免 Key 公共服务预设**：Esri World Imagery 卫星影像、公共 OSRM 与 FOSSGIS OSRM，点击填入后应用即可使用，地址仍可编辑。不可达的 OSM 快捷入口已替换；影像在北京 12/14/16/19 级均实际打开确认正常，不含中文道路注记。收集来源、使用条件和直连结果见 [docs/KEYLESS_SERVICES.md](docs/KEYLESS_SERVICES.md)。
+
 ## 启动
 
-项目使用 **标准 Flutter 3.44.8 / Dart 3.12.2**，已记录 `.fvmrc`。全局 OpenHarmony 分支与当前 `shadcn_ui` 的平台枚举不兼容，使用项目 SDK 而非更改全局 SDK。
+项目使用 **标准 Flutter 3.47.8 / Dart 3.13.7**，已记录 `.fvmrc`。全局 OpenHarmony 分支与当前 `shadcn_ui` 的平台枚举不兼容，使用项目 SDK 而非更改全局 SDK。
 
 ```bash
 cd flutter_jtt808_simulator
-fvm use 3.44.8
+fvm use 3.47.8
 fvm flutter pub get
 fvm flutter run -d macos
 ```
 
-没有 FVM 时，在标准 Flutter 3.44.8 环境执行对应 `flutter` 命令即可。若镜像源超时，可将该条命令的 `PUB_HOSTED_URL` 设为 `https://pub.dev`。
+没有 FVM 时，在标准 Flutter 3.47.8 环境执行对应 `flutter` 命令即可。若镜像源超时，可将该条命令的 `PUB_HOSTED_URL` 设为 `https://pub.dev`。
 
 已生成 macOS、Android、iOS、Windows 工程。Windows 可执行 `fvm flutter run -d windows`；Android 可执行 `fvm flutter run -d <device-id>`；iOS 需要 Xcode、原生依赖下载和适当的签名配置。Linux 工程需在相应环境用 Flutter 官方命令生成。
 
@@ -80,12 +82,14 @@ latitude,longitude,speed
 
 ```bash
 fvm flutter analyze --no-pub
-fvm flutter test --no-pub --test-randomize-ordering-seed=20261025
+fvm flutter test --no-pub --test-randomize-ordering-seed=20261030
 fvm flutter build macos --debug --no-pub
 fvm flutter build apk --debug --no-pub
 ```
 
-验证结果：全项目静态分析无问题，**55 项测试全部通过**，另完成 12 张三尺寸浅深主题渲染检查；macOS Debug 与 Android Debug APK 构建通过。详细记录见 [docs/VERIFICATION.md](docs/VERIFICATION.md)。
+最新瓦片预设验证（2026-10-30）：随机顺序运行的 **201 项测试全部通过**；另完成 4 项组件渲染检查，查看手机/桌面浅深主题的 8 张图片。替代的 Esri World Imagery 在北京 12/14/16/19 级均直接返回正常 JPEG，已逐张打开；OSM 和 GeoQ 本次超时，Esri 道路图高缩放返回无数据占位图，均未作为新预设。本轮没有重新执行原生构建，单次本机成功不等于目标大陆全网稳定可达。
+
+历史构建记录（2026-10-25）：macOS Debug 与 Android Debug APK 构建通过；当时另完成 12 张三尺寸浅深主题渲染检查。详细记录见 [docs/VERIFICATION.md](docs/VERIFICATION.md)。
 
 测试包括独立公开 HEX fixture、GBK、错误/边界帧、真实 `ServerSocket` 回环注册鉴权与指令、路线推进、单一定时发送、暂停/断开、Hive 重开与损坏保护，以及中英文、浅深色、390/1440 布局和表单交互。
 
@@ -100,7 +104,7 @@ iOS 模拟器构建本次被 `file_picker` 的原生依赖 `DKImagePickerControl
 
 ## 数据与边界
 
-工作区导出包含鉴权码，原始报文也可能包含鉴权内容；本地 Hive 存储没有额外加密。请使用测试终端，妥善保管导出文件。地图开启后会向 OpenStreetMap 请求瓦片；其他终端数据仅发送至用户配置的平台。
+工作区导出包含鉴权码、地图及路径规划 Key、各图源地址及其中的令牌，原始报文也可能包含鉴权内容；本地 Hive 存储没有额外加密。请使用测试终端，妥善保管导出文件。**在线底图开关默认开启**，天地图 Key 配置完成后，有坐标的预览和地图建线才会请求底图与中文注记；Key 缺失时不发请求，不自动切换海外图源。点击驾车规划才会向所选规划服务发送选点；这与底图开关独立。其他终端数据仅发送至用户配置的平台。
 
 当前不含：2019、1078 音视频、加密/分包、百度道路规划、随机停留/扰动、定时计划和十万辆压测承诺。移动端遵守系统前后台调度，不提供后台常驻通信保证。
 

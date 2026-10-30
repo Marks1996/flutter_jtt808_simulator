@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'route_planning.dart';
+
 /// The simulator intentionally targets the same 2013 protocol as the reference.
 enum ConnectionPhase {
   disconnected,
@@ -209,8 +211,10 @@ class DriveRoute {
     required this.name,
     required List<LocationFix> points,
     this.coordinateSystem = 'WGS84',
+    this.planning,
   }) : points = List.unmodifiable(points);
   final String id, name, coordinateSystem;
+  final RoutePlanMetadata? planning;
   final List<LocationFix> points;
   double get distanceKm {
     var total = 0.0;
@@ -224,12 +228,18 @@ class DriveRoute {
     'id': id,
     'name': name,
     'coordinateSystem': coordinateSystem,
+    if (planning != null) 'planning': planning!.toJson(),
     'points': points.map((p) => p.toJson()).toList(),
   };
   factory DriveRoute.fromJson(Map<String, Object?> json) => DriveRoute(
     id: json['id'] as String,
     name: json['name'] as String,
     coordinateSystem: json['coordinateSystem'] as String? ?? 'WGS84',
+    planning: json['planning'] == null
+        ? null
+        : RoutePlanMetadata.fromJson(
+            Map<String, Object?>.from(json['planning'] as Map),
+          ),
     points: (json['points'] as List)
         .map((p) => LocationFix.fromJson(Map<String, Object?>.from(p as Map)))
         .toList(),

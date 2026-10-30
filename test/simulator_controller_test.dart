@@ -38,6 +38,79 @@ void main() {
     expect(controller.receivedCount, 0);
     expect(controller.logs, isEmpty);
   });
+  test('basemap settings persist and invalid updates remain atomic', () async {
+    await controller.load();
+    const settings = BasemapSettings(
+      provider: BasemapProvider.custom,
+      customUrl: 'https://tiles.example.com/{z}/{x}/{y}.png',
+      customAttribution: '© Test source',
+      customCoordinates: BasemapCoordinates.gcj02,
+    );
+    await controller.setBasemap(settings);
+    expect(repository.data.basemap, settings);
+    await controller.setTheme('dark');
+    expect(repository.data.basemap, settings);
+    await controller.setBasemap(settings.copyWith(enabled: false));
+    await controller.load();
+    expect(controller.workspace.basemap.enabled, isFalse);
+    final before = controller.exportWorkspace();
+    await expectLater(
+      controller.setBasemap(settings.copyWith(customUrl: 'not a template')),
+      throwsFormatException,
+    );
+    expect(controller.exportWorkspace(), before);
+    await controller.importWorkspace(before);
+    expect(controller.workspace.basemap, settings.copyWith(enabled: false));
+  });
+
+  test(
+    'basemap save failure is reported and the same settings can be retried',
+    () async {
+      await controller.load();
+      repository.failSave = true;
+      const settings = BasemapSettings(enabled: false);
+      await controller.setBasemap(settings);
+      expect(controller.saveState.isFailure, isTrue);
+      expect(controller.workspace.basemap, settings);
+      repository.failSave = false;
+      await controller.retrySave();
+      expect(repository.data.basemap, settings);
+    },
+  );
+
+  test(
+    'routing settings persist, export and reject invalid updates atomically',
+    () async {
+      await controller.load();
+      const settings = RoutePlanningSettings(
+        provider: RoutingProvider.amap,
+        amapKey: 'test-key',
+        osrmUrl: 'https://routing.example.com',
+      );
+      await controller.setRouting(settings);
+      await controller.setTheme('dark');
+      expect(repository.data.routing, settings);
+      final before = controller.exportWorkspace();
+      await expectLater(
+        controller.setRouting(settings.copyWith(amapKey: 'bad key')),
+        throwsFormatException,
+      );
+      expect(controller.exportWorkspace(), before);
+      await controller.importWorkspace(before);
+      expect(controller.workspace.routing, settings);
+      repository.failSave = true;
+      await controller.setRouting(
+        settings.copyWith(provider: RoutingProvider.osrm),
+      );
+      expect(controller.saveState.isFailure, isTrue);
+      repository.failSave = false;
+      await controller.retrySave();
+      await controller.load();
+      expect(controller.workspace.routing.provider, RoutingProvider.osrm);
+      expect(controller.workspace.routing.amapKey, 'test-key');
+    },
+  );
+
   test('load failure remains recoverable without erasing disk data', () async {
     repository.failLoad = true;
     await controller.load();

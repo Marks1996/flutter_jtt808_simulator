@@ -89,6 +89,10 @@ Desktop.ini
 # Local generated artwork, previews, and backups
 /output/
 
+# Local design-tool artifacts
+/.impeccable/
+/.taste-skill/
+
 # Local code-search index
 /.codegraph/
 

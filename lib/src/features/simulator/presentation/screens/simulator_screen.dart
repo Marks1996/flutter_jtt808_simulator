@@ -67,27 +67,19 @@ class _SimulatorScreenState extends ConsumerState<SimulatorScreen> {
             Expanded(child: _content(context, c, terminalId)),
           ],
         );
+        // The desktop caption inset belongs inside the scrollable, not around
+        // its viewport: scrolled content must pass behind the title area.
+        final scrollsUnderTitleBar =
+            DesktopWindowService.isSupported &&
+            c.loadState.isSuccess &&
+            MediaQuery.paddingOf(context).top > 0;
         final work = SafeArea(
+          top: !scrollsUnderTitleBar || c.saveState.isFailure,
           bottom: false,
-          child: Padding(
-            padding: navigation
-                ? const EdgeInsets.only(right: 8, bottom: 8)
-                : EdgeInsets.zero,
-            child: ClipRRect(
-              borderRadius: navigation
-                  ? SimStyle.sheetRadius
-                  : BorderRadius.zero,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: context.colors.surfaceContainerLowest,
-                  borderRadius: navigation ? SimStyle.sheetRadius : null,
-                  border: navigation
-                      ? Border.all(color: context.colors.outlineVariant)
-                      : null,
-                ),
-                child: content,
-              ),
-            ),
+          child: ColoredBox(
+            key: const ValueKey('sim-workspace-surface'),
+            color: context.colors.surface,
+            child: content,
           ),
         );
         return Scaffold(
@@ -201,7 +193,7 @@ class _SimulatorScreenState extends ConsumerState<SimulatorScreen> {
         label: collapsed ? tr('sim.${_nav[i].$1}') : null,
         child: ShadButton.ghost(
           key: ValueKey('nav-${_nav[i].$1}'),
-          height: 34,
+          height: 40,
           expands: !collapsed,
           mainAxisAlignment: collapsed
               ? MainAxisAlignment.center
@@ -247,46 +239,69 @@ class _SimulatorScreenState extends ConsumerState<SimulatorScreen> {
       );
     }
 
+    Widget group(String key) => Padding(
+      padding: EdgeInsets.fromLTRB(
+        SimSpace.lg,
+        SimSpace.lg,
+        SimSpace.lg,
+        SimSpace.ms,
+      ),
+      child: Text(
+        tr('sim.nav_groups.$key'),
+        style: context.textTheme.labelMedium?.copyWith(
+          color: context.colors.onSurfaceVariant,
+        ),
+      ),
+    );
+
     return SizedBox(
       key: ValueKey(
         collapsed ? 'sim-navigation-rail' : 'sim-labeled-navigation',
       ),
-      width: collapsed ? 56 : 184,
+      width: collapsed ? 72 : 248,
       child: SafeArea(
         bottom: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ValueListenableBuilder(
-              valueListenable: debugWindowStyle,
-              builder: (context, value, child) =>
-                  DesktopWindowService.isSupported &&
-                      windowStyle == TargetPlatform.windows
-                  ? SizedBox(height: SimSpace.xs)
-                  : child!,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  collapsed ? 8 : 16,
-                  12,
-                  collapsed ? 8 : 12,
-                  18,
-                ),
-                child: collapsed
-                    ? ShadTooltip(
-                        builder: (_) => Text(tr('sim.app_name')),
-                        child: ClipRRect(
-                          borderRadius: AppBorders.sm,
-                          child: Image.asset(
-                            AppAssets.logo,
-                            width: 32,
-                            height: 32,
-                            excludeFromSemantics: true,
-                          ),
-                        ),
-                      )
-                    : Row(
-                        children: [
-                          ClipRRect(
+        child: Padding(
+          padding: EdgeInsets.all(SimSpace.ms),
+          child: DecoratedBox(
+            key: const ValueKey('sim-sidebar-panel'),
+            decoration: BoxDecoration(
+              color: context.colors.surfaceContainerLow,
+              borderRadius: AppBorders.card,
+              border: Border.all(color: context.colors.outlineVariant),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: SimSpace.ms),
+                // Frequent inspection first, configuration second.
+                item(0),
+                item(3),
+                if (!collapsed)
+                  group('configuration')
+                else
+                  SizedBox(height: SimSpace.lg),
+                item(1),
+                item(2),
+                if (!collapsed)
+                  group('settings')
+                else
+                  SizedBox(height: SimSpace.lg),
+                item(4),
+                const Spacer(),
+                ValueListenableBuilder(
+                  valueListenable: debugWindowStyle,
+                  builder: (context, value, child) =>
+                      DesktopWindowService.isSupported &&
+                          windowStyle == TargetPlatform.windows
+                      ? const SizedBox.shrink()
+                      : child!,
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      collapsed ? SimSpace.ms : SimSpace.lg,
+                    ),
+                    child: collapsed
+                        ? ClipRRect(
                             borderRadius: AppBorders.sm,
                             child: Image.asset(
                               AppAssets.logo,
@@ -294,49 +309,40 @@ class _SimulatorScreenState extends ConsumerState<SimulatorScreen> {
                               height: 32,
                               excludeFromSemantics: true,
                             ),
-                          ),
-                          SizedBox(width: SimSpace.sm),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
+                          )
+                        : Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: AppBorders.sm,
+                                child: Image.asset(
+                                  AppAssets.logo,
+                                  width: 32,
+                                  height: 32,
+                                  excludeFromSemantics: true,
+                                ),
+                              ),
+                              SizedBox(width: SimSpace.ms),
+                              Expanded(
+                                child: Text(
                                   tr('sim.app_name'),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  style: context.textTheme.titleMedium,
+                                  style: context.textTheme.titleSmall,
                                 ),
-                                SizedBox(height: SimSpace.xs),
-                                Text(
-                                  tr('sim.local_workspace'),
-                                  style: context.textTheme.bodySmall?.copyWith(
-                                    color: context.colors.onSurfaceVariant,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-              ),
-            ),
-            for (var i = 0; i < _nav.length - 1; i++) item(i),
-            const Spacer(),
-            item(_nav.length - 1),
-            if (!collapsed)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 10, 12, 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      tr('sim.protocol_short'),
-                      style: context.textTheme.labelSmall?.copyWith(
-                        color: context.colors.onSurfaceVariant,
-                      ),
+                  ),
+                ),
+                if (!collapsed)
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      SimSpace.lg,
+                      0,
+                      SimSpace.lg,
+                      SimSpace.lg,
                     ),
-                    SizedBox(height: SimSpace.xs),
-                    Text(
+                    child: Text(
                       tr(
                         c.saveState.isLoading
                             ? 'sim.saving'
@@ -350,10 +356,10 @@ class _SimulatorScreenState extends ConsumerState<SimulatorScreen> {
                             : context.colors.onSurfaceVariant,
                       ),
                     ),
-                  ],
-                ),
-              ),
-          ],
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );

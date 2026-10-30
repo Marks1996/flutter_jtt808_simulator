@@ -1,708 +1,459 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters, constant_identifier_names
+// ignore_for_file: constant_identifier_names
 
-import 'dart:ui';
+abstract class  LocaleKeys {
+  static const window_debug_title = 'window.debug_title';
+  static const window_debug_help = 'window.debug_help';
+  static const window_style = 'window.style';
+  static const window_minimize = 'window.minimize';
+  static const window_maximize = 'window.maximize';
+  static const window_restore = 'window.restore';
+  static const window_close = 'window.close';
+  static const window_exit_fullscreen = 'window.exit_fullscreen';
+  static const window_action_failed = 'window.action_failed';
+  static const window = 'window';
+  static const sim_app_name = 'sim.app_name';
+  static const sim_app_descriptor = 'sim.app_descriptor';
+  static const sim_protocol_short = 'sim.protocol_short';
+  static const sim_protocol_transport = 'sim.protocol_transport';
+  static const sim_nav_groups_configuration = 'sim.nav_groups.configuration';
+  static const sim_nav_groups_settings = 'sim.nav_groups.settings';
+  static const sim_nav_groups = 'sim.nav_groups';
+  static const sim_local_workspace = 'sim.local_workspace';
+  static const sim_console = 'sim.console';
+  static const sim_terminals = 'sim.terminals';
+  static const sim_routes_tasks = 'sim.routes_tasks';
+  static const sim_protocol_logs = 'sim.protocol_logs';
+  static const sim_settings = 'sim.settings';
+  static const sim_nav_console = 'sim.nav.console';
+  static const sim_nav_terminals = 'sim.nav.terminals';
+  static const sim_nav_routes_tasks = 'sim.nav.routes_tasks';
+  static const sim_nav_protocol_logs = 'sim.nav.protocol_logs';
+  static const sim_nav_settings = 'sim.nav.settings';
+  static const sim_nav = 'sim.nav';
+  static const sim_console_subtitle = 'sim.console_subtitle';
+  static const sim_terminals_subtitle = 'sim.terminals_subtitle';
+  static const sim_routes_tasks_subtitle = 'sim.routes_tasks_subtitle';
+  static const sim_logs_subtitle = 'sim.logs_subtitle';
+  static const sim_settings_subtitle = 'sim.settings_subtitle';
+  static const sim_dialog_terminal_description = 'sim.dialog.terminal_description';
+  static const sim_dialog_route_description = 'sim.dialog.route_description';
+  static const sim_dialog_task_description = 'sim.dialog.task_description';
+  static const sim_dialog_import_description = 'sim.dialog.import_description';
+  static const sim_dialog_export_description = 'sim.dialog.export_description';
+  static const sim_dialog_log_description = 'sim.dialog.log_description';
+  static const sim_dialog = 'sim.dialog';
+  static const sim_create_terminal = 'sim.create_terminal';
+  static const sim_edit_terminal = 'sim.edit_terminal';
+  static const sim_delete_terminal = 'sim.delete_terminal';
+  static const sim_create_route = 'sim.create_route';
+  static const sim_edit_route = 'sim.edit_route';
+  static const sim_delete_route = 'sim.delete_route';
+  static const sim_save_route = 'sim.save_route';
+  static const sim_create_task = 'sim.create_task';
+  static const sim_edit_task = 'sim.edit_task';
+  static const sim_delete_task = 'sim.delete_task';
+  static const sim_save_task = 'sim.save_task';
+  static const sim_save = 'sim.save';
+  static const sim_cancel = 'sim.cancel';
+  static const sim_discard_changes_title = 'sim.discard_changes_title';
+  static const sim_discard_changes_body = 'sim.discard_changes_body';
+  static const sim_keep_editing = 'sim.keep_editing';
+  static const sim_discard_changes = 'sim.discard_changes';
+  static const sim_close = 'sim.close';
+  static const sim_delete = 'sim.delete';
+  static const sim_clear = 'sim.clear';
+  static const sim_actions = 'sim.actions';
+  static const sim_view_all = 'sim.view_all';
+  static const sim_copied = 'sim.copied';
+  static const sim_copy_json = 'sim.copy_json';
+  static const sim_copy_hex = 'sim.copy_hex';
+  static const sim_copy_csv = 'sim.copy_csv';
+  static const sim_paste_csv = 'sim.paste_csv';
+  static const sim_paste_json = 'sim.paste_json';
+  static const sim_import_file = 'sim.import_file';
+  static const sim_delete_named = 'sim.delete_named';
+  static const sim_no_terminals = 'sim.no_terminals';
+  static const sim_no_terminals_console = 'sim.no_terminals_console';
+  static const sim_no_terminals_management = 'sim.no_terminals_management';
+  static const sim_no_routes = 'sim.no_routes';
+  static const sim_no_routes_hint = 'sim.no_routes_hint';
+  static const sim_no_tasks = 'sim.no_tasks';
+  static const sim_no_tasks_hint = 'sim.no_tasks_hint';
+  static const sim_no_tasks_dependencies = 'sim.no_tasks_dependencies';
+  static const sim_no_assigned_task = 'sim.no_assigned_task';
+  static const sim_manual_mode_hint = 'sim.manual_mode_hint';
+  static const sim_manage_routes_tasks = 'sim.manage_routes_tasks';
+  static const sim_online_terminals = 'sim.online_terminals';
+  static const sim_running_tasks = 'sim.running_tasks';
+  static const sim_messages_sent = 'sim.messages_sent';
+  static const sim_messages_received = 'sim.messages_received';
+  static const sim_messages_sent_received = 'sim.messages_sent_received';
+  static const sim_traffic_summary = 'sim.traffic_summary';
+  static const sim_terminal = 'sim.terminal';
+  static const sim_route = 'sim.route';
+  static const sim_routes = 'sim.routes';
+  static const sim_tasks = 'sim.tasks';
+  static const sim_server = 'sim.server';
+  static const sim_connection = 'sim.connection';
+  static const sim_current_terminal = 'sim.current_terminal';
+  static const sim_connect = 'sim.connect';
+  static const sim_disconnect = 'sim.disconnect';
+  static const sim_reconnect = 'sim.reconnect';
+  static const sim_connect_all = 'sim.connect_all';
+  static const sim_disconnect_all = 'sim.disconnect_all';
+  static const sim_heartbeat = 'sim.heartbeat';
+  static const sim_send_location = 'sim.send_location';
+  static const sim_connection_details = 'sim.connection_details';
+  static const sim_open_console = 'sim.open_console';
+  static const sim_phase_disconnected = 'sim.phase.disconnected';
+  static const sim_phase_connecting = 'sim.phase.connecting';
+  static const sim_phase_registering = 'sim.phase.registering';
+  static const sim_phase_authenticating = 'sim.phase.authenticating';
+  static const sim_phase_online = 'sim.phase.online';
+  static const sim_phase_failed = 'sim.phase.failed';
+  static const sim_phase = 'sim.phase';
+  static const sim_terminal_connection = 'sim.terminal_connection';
+  static const sim_terminal_registration = 'sim.terminal_registration';
+  static const sim_terminal_auth = 'sim.terminal_auth';
+  static const sim_terminal_intervals = 'sim.terminal_intervals';
+  static const sim_field_name = 'sim.field.name';
+  static const sim_field_host = 'sim.field.host';
+  static const sim_field_port = 'sim.field.port';
+  static const sim_field_phone = 'sim.field.phone';
+  static const sim_field_province = 'sim.field.province';
+  static const sim_field_city = 'sim.field.city';
+  static const sim_field_manufacturer = 'sim.field.manufacturer';
+  static const sim_field_model = 'sim.field.model';
+  static const sim_field_terminalId = 'sim.field.terminalId';
+  static const sim_field_plate = 'sim.field.plate';
+  static const sim_field_plateColor = 'sim.field.plateColor';
+  static const sim_field_authCode = 'sim.field.authCode';
+  static const sim_field_heartbeatSeconds = 'sim.field.heartbeatSeconds';
+  static const sim_field_locationIntervalSeconds = 'sim.field.locationIntervalSeconds';
+  static const sim_field_autoReconnect = 'sim.field.autoReconnect';
+  static const sim_field_latitude = 'sim.field.latitude';
+  static const sim_field_longitude = 'sim.field.longitude';
+  static const sim_field_speed = 'sim.field.speed';
+  static const sim_field_altitude = 'sim.field.altitude';
+  static const sim_field_direction = 'sim.field.direction';
+  static const sim_field_mileage = 'sim.field.mileage';
+  static const sim_field_alarm = 'sim.field.alarm';
+  static const sim_field_status = 'sim.field.status';
+  static const sim_field = 'sim.field';
+  static const sim_identity_manufacturer_hint = 'sim.identity_manufacturer_hint';
+  static const sim_identity_model_hint = 'sim.identity_model_hint';
+  static const sim_identity_terminal_hint = 'sim.identity_terminal_hint';
+  static const sim_plate_color_0 = 'sim.plate_color.0';
+  static const sim_plate_color_1 = 'sim.plate_color.1';
+  static const sim_plate_color_2 = 'sim.plate_color.2';
+  static const sim_plate_color_3 = 'sim.plate_color.3';
+  static const sim_plate_color_4 = 'sim.plate_color.4';
+  static const sim_plate_color_9 = 'sim.plate_color.9';
+  static const sim_plate_color = 'sim.plate_color';
+  static const sim_auth_hint = 'sim.auth_hint';
+  static const sim_show_auth = 'sim.show_auth';
+  static const sim_hide_auth = 'sim.hide_auth';
+  static const sim_auto_reconnect_hint = 'sim.auto_reconnect_hint';
+  static const sim_workspace_id = 'sim.workspace_id';
+  static const sim_terminals_help = 'sim.terminals_help';
+  static const sim_number_range = 'sim.number_range';
+  static const sim_current_position = 'sim.current_position';
+  static const sim_coordinates = 'sim.coordinates';
+  static const sim_position_local = 'sim.position_local';
+  static const sim_position_reporting = 'sim.position_reporting';
+  static const sim_last_sent = 'sim.last_sent';
+  static const sim_last_sent_value = 'sim.last_sent_value';
+  static const sim_not_sent = 'sim.not_sent';
+  static const sim_unit_kmh = 'sim.unit_kmh';
+  static const sim_manual_location = 'sim.manual_location';
+  static const sim_manual_location_hint = 'sim.manual_location_hint';
+  static const sim_manual_during_task = 'sim.manual_during_task';
+  static const sim_status_bits = 'sim.status_bits';
+  static const sim_alarm_bits = 'sim.alarm_bits';
+  static const sim_acc = 'sim.acc';
+  static const sim_positioned = 'sim.positioned';
+  static const sim_alarm_emergency = 'sim.alarm_emergency';
+  static const sim_alarm_overspeed = 'sim.alarm_overspeed';
+  static const sim_alarm_fatigue = 'sim.alarm_fatigue';
+  static const sim_alarm_low_voltage = 'sim.alarm_low_voltage';
+  static const sim_alarm_power_loss = 'sim.alarm_power_loss';
+  static const sim_hex32_hint = 'sim.hex32_hint';
+  static const sim_apply_location = 'sim.apply_location';
+  static const sim_apply_send_location = 'sim.apply_send_location';
+  static const sim_unsaved_location = 'sim.unsaved_location';
+  static const sim_location_applied = 'sim.location_applied';
+  static const sim_location_sent = 'sim.location_sent';
+  static const sim_current_task = 'sim.current_task';
+  static const sim_start_task = 'sim.start_task';
+  static const sim_pause_task = 'sim.pause_task';
+  static const sim_resume_task = 'sim.resume_task';
+  static const sim_stop_task = 'sim.stop_task';
+  static const sim_task_phase_stopped = 'sim.task_phase.stopped';
+  static const sim_task_phase_running = 'sim.task_phase.running';
+  static const sim_task_phase_paused = 'sim.task_phase.paused';
+  static const sim_task_phase_completed = 'sim.task_phase.completed';
+  static const sim_task_phase = 'sim.task_phase';
+  static const sim_task_waiting = 'sim.task_waiting';
+  static const sim_task_progress = 'sim.task_progress';
+  static const sim_routing_settings = 'sim.routing.settings';
+  static const sim_routing_settings_help = 'sim.routing.settings_help';
+  static const sim_routing_source = 'sim.routing.source';
+  static const sim_routing_provider_osrm = 'sim.routing.provider.osrm';
+  static const sim_routing_provider_amap = 'sim.routing.provider.amap';
+  static const sim_routing_provider = 'sim.routing.provider';
+  static const sim_routing_osrm_url = 'sim.routing.osrm_url';
+  static const sim_routing_osrm_url_help = 'sim.routing.osrm_url_help';
+  static const sim_routing_demo_warning = 'sim.routing.demo_warning';
+  static const sim_routing_apply_key = 'sim.routing.apply_key';
+  static const sim_routing_amap_key = 'sim.routing.amap_key';
+  static const sim_routing_amap_key_help = 'sim.routing.amap_key_help';
+  static const sim_routing_amap_warning = 'sim.routing.amap_warning';
+  static const sim_routing_amap_authorized = 'sim.routing.amap_authorized';
+  static const sim_routing_privacy = 'sim.routing.privacy';
+  static const sim_routing_save = 'sim.routing.save';
+  static const sim_routing_saved = 'sim.routing.saved';
+  static const sim_routing_fit_points = 'sim.routing.fit_points';
+  static const sim_routing_visual_tab = 'sim.routing.visual_tab';
+  static const sim_routing_csv_tab = 'sim.routing.csv_tab';
+  static const sim_routing_pick_help = 'sim.routing.pick_help';
+  static const sim_routing_add_hint = 'sim.routing.add_hint';
+  static const sim_routing_replace_hint = 'sim.routing.replace_hint';
+  static const sim_routing_coordinate = 'sim.routing.coordinate';
+  static const sim_routing_add_coordinate = 'sim.routing.add_coordinate';
+  static const sim_routing_replace_coordinate = 'sim.routing.replace_coordinate';
+  static const sim_routing_continue_adding = 'sim.routing.continue_adding';
+  static const sim_routing_clear_points = 'sim.routing.clear_points';
+  static const sim_routing_point_number = 'sim.routing.point_number';
+  static const sim_routing_origin = 'sim.routing.origin';
+  static const sim_routing_destination = 'sim.routing.destination';
+  static const sim_routing_stop = 'sim.routing.stop';
+  static const sim_routing_move_up = 'sim.routing.move_up';
+  static const sim_routing_move_down = 'sim.routing.move_down';
+  static const sim_routing_remove_point = 'sim.routing.remove_point';
+  static const sim_routing_speed = 'sim.routing.speed';
+  static const sim_routing_selected_provider = 'sim.routing.selected_provider';
+  static const sim_routing_request_hint = 'sim.routing.request_hint';
+  static const sim_routing_plan = 'sim.routing.plan';
+  static const sim_routing_loading = 'sim.routing.loading';
+  static const sim_routing_cancel = 'sim.routing.cancel';
+  static const sim_routing_ready = 'sim.routing.ready';
+  static const sim_routing_no_tiles = 'sim.routing.no_tiles';
+  static const sim_routing_attribution_osrm = 'sim.routing.attribution.osrm';
+  static const sim_routing_attribution_amap = 'sim.routing.attribution.amap';
+  static const sim_routing_attribution = 'sim.routing.attribution';
+  static const sim_routing = 'sim.routing';
+  static const sim_route_name = 'sim.route_name';
+  static const sim_task_name = 'sim.task_name';
+  static const sim_route_csv = 'sim.route_csv';
+  static const sim_route_format_help = 'sim.route_format_help';
+  static const sim_example_polyline = 'sim.example_polyline';
+  static const sim_preview_route = 'sim.preview_route';
+  static const sim_preview_stale = 'sim.preview_stale';
+  static const sim_route_summary = 'sim.route_summary';
+  static const sim_routes_count = 'sim.routes_count';
+  static const sim_tasks_count = 'sim.tasks_count';
+  static const sim_routes_help = 'sim.routes_help';
+  static const sim_loop = 'sim.loop';
+  static const sim_loop_hint = 'sim.loop_hint';
+  static const sim_loop_enabled = 'sim.loop_enabled';
+  static const sim_single_pass = 'sim.single_pass';
+  static const sim_task_start_hint = 'sim.task_start_hint';
+  static const sim_playback_help = 'sim.playback_help';
+  static const sim_map_preview = 'sim.map_preview';
+  static const sim_map_offline = 'sim.map_offline';
+  static const sim_map_online = 'sim.map_online';
+  static const sim_online_basemap = 'sim.online_basemap';
+  static const sim_map_online_hint = 'sim.map_online_hint';
+  static const sim_basemap_settings = 'sim.basemap_settings';
+  static const sim_basemap_settings_help = 'sim.basemap_settings_help';
+  static const sim_basemap_default_enabled = 'sim.basemap_default_enabled';
+  static const sim_basemap_source = 'sim.basemap_source';
+  static const sim_amap_tile_key = 'sim.amap_tile_key';
+  static const sim_baidu_tile_key = 'sim.baidu_tile_key';
+  static const sim_vendor_tile_key_help = 'sim.vendor_tile_key_help';
+  static const sim_osm_connection_help = 'sim.osm_connection_help';
+  static const sim_basemap_authorized_url = 'sim.basemap_authorized_url';
+  static const sim_keyless_imagery_preset = 'sim.keyless.imagery_preset';
+  static const sim_keyless_imagery_help = 'sim.keyless.imagery_help';
+  static const sim_keyless_imagery_terms = 'sim.keyless.imagery_terms';
+  static const sim_keyless_osm_preset = 'sim.keyless.osm_preset';
+  static const sim_keyless_osrm_preset = 'sim.keyless.osrm_preset';
+  static const sim_keyless_fossgis_preset = 'sim.keyless.fossgis_preset';
+  static const sim_keyless_osm_help = 'sim.keyless.osm_help';
+  static const sim_keyless_osrm_help = 'sim.keyless.osrm_help';
+  static const sim_keyless_data_license = 'sim.keyless.data_license';
+  static const sim_keyless_fix_map = 'sim.keyless.fix_map';
+  static const sim_keyless_osm_policy = 'sim.keyless.osm_policy';
+  static const sim_keyless_routing_policy = 'sim.keyless.routing_policy';
+  static const sim_keyless = 'sim.keyless';
+  static const sim_tianditu_key = 'sim.tianditu_key';
+  static const sim_tianditu_key_help = 'sim.tianditu_key_help';
+  static const sim_tianditu_layers_help = 'sim.tianditu_layers_help';
+  static const sim_tianditu_apply_key = 'sim.tianditu_apply_key';
+  static const sim_tianditu_attribution = 'sim.tianditu_attribution';
+  static const sim_basemap_provider_tianditu = 'sim.basemap_provider.tianditu';
+  static const sim_basemap_provider_openStreetMap = 'sim.basemap_provider.openStreetMap';
+  static const sim_basemap_provider_amap = 'sim.basemap_provider.amap';
+  static const sim_basemap_provider_baidu = 'sim.basemap_provider.baidu';
+  static const sim_basemap_provider_custom = 'sim.basemap_provider.custom';
+  static const sim_basemap_provider = 'sim.basemap_provider';
+  static const sim_basemap_crs_wgs84 = 'sim.basemap_crs.wgs84';
+  static const sim_basemap_crs_gcj02 = 'sim.basemap_crs.gcj02';
+  static const sim_basemap_crs = 'sim.basemap_crs';
+  static const sim_basemap_url = 'sim.basemap_url';
+  static const sim_basemap_url_hint = 'sim.basemap_url_hint';
+  static const sim_basemap_baidu_url_hint = 'sim.basemap_baidu_url_hint';
+  static const sim_basemap_coordinates = 'sim.basemap_coordinates';
+  static const sim_basemap_attribution = 'sim.basemap_attribution';
+  static const sim_basemap_network_hint = 'sim.basemap_network_hint';
+  static const sim_basemap_provider_warning = 'sim.basemap_provider_warning';
+  static const sim_save_basemap = 'sim.save_basemap';
+  static const sim_basemap_saved = 'sim.basemap_saved';
+  static const sim_retry_basemap = 'sim.retry_basemap';
+  static const sim_no_coordinates = 'sim.no_coordinates';
+  static const sim_coordinate_plot = 'sim.coordinate_plot';
+  static const sim_plot_bounds = 'sim.plot_bounds';
+  static const sim_map_disclaimer = 'sim.map_disclaimer';
+  static const sim_map_failed = 'sim.map_failed';
+  static const sim_osm_attribution = 'sim.osm_attribution';
+  static const sim_amap_attribution = 'sim.amap_attribution';
+  static const sim_baidu_attribution = 'sim.baidu_attribution';
+  static const sim_latest_logs = 'sim.latest_logs';
+  static const sim_no_logs = 'sim.no_logs';
+  static const sim_no_logs_hint = 'sim.no_logs_hint';
+  static const sim_no_matching_logs = 'sim.no_matching_logs';
+  static const sim_pause_display = 'sim.pause_display';
+  static const sim_resume_display = 'sim.resume_display';
+  static const sim_clear_logs = 'sim.clear_logs';
+  static const sim_clear_logs_confirm = 'sim.clear_logs_confirm';
+  static const sim_copy_logs_json = 'sim.copy_logs_json';
+  static const sim_export_logs_hint = 'sim.export_logs_hint';
+  static const sim_terminal_filter = 'sim.terminal_filter';
+  static const sim_direction_filter = 'sim.direction_filter';
+  static const sim_all_terminals = 'sim.all_terminals';
+  static const sim_all_directions = 'sim.all_directions';
+  static const sim_log_direction_sent = 'sim.log_direction.sent';
+  static const sim_log_direction_received = 'sim.log_direction.received';
+  static const sim_log_direction_event = 'sim.log_direction.event';
+  static const sim_log_direction = 'sim.log_direction';
+  static const sim_search_logs = 'sim.search_logs';
+  static const sim_search_logs_hint = 'sim.search_logs_hint';
+  static const sim_clear_search = 'sim.clear_search';
+  static const sim_display_paused_hint = 'sim.display_paused_hint';
+  static const sim_log_count = 'sim.log_count';
+  static const sim_log_detail = 'sim.log_detail';
+  static const sim_time = 'sim.time';
+  static const sim_direction = 'sim.direction';
+  static const sim_message_id = 'sim.message_id';
+  static const sim_sequence = 'sim.sequence';
+  static const sim_body_length = 'sim.body_length';
+  static const sim_byte_count = 'sim.byte_count';
+  static const sim_header_validation = 'sim.header_validation';
+  static const sim_header_valid = 'sim.header_valid';
+  static const sim_header_invalid = 'sim.header_invalid';
+  static const sim_no_packet = 'sim.no_packet';
+  static const sim_raw_hex = 'sim.raw_hex';
+  static const sim_raw_send = 'sim.raw_send';
+  static const sim_raw_send_hint = 'sim.raw_send_hint';
+  static const sim_send_terminal = 'sim.send_terminal';
+  static const sim_raw_hex_hint = 'sim.raw_hex_hint';
+  static const sim_send_raw = 'sim.send_raw';
+  static const sim_raw_send_failed = 'sim.raw_send_failed';
+  static const sim_raw_sent = 'sim.raw_sent';
+  static const sim_appearance_language = 'sim.appearance_language';
+  static const sim_theme = 'sim.theme';
+  static const sim_theme_mode_system = 'sim.theme_mode.system';
+  static const sim_theme_mode_light = 'sim.theme_mode.light';
+  static const sim_theme_mode_dark = 'sim.theme_mode.dark';
+  static const sim_theme_mode = 'sim.theme_mode';
+  static const sim_language = 'sim.language';
+  static const sim_language_name_zh = 'sim.language_name.zh';
+  static const sim_language_name_en = 'sim.language_name.en';
+  static const sim_language_name = 'sim.language_name';
+  static const sim_workspace = 'sim.workspace';
+  static const sim_workspace_help = 'sim.workspace_help';
+  static const sim_workspace_contents = 'sim.workspace_contents';
+  static const sim_workspace_counts = 'sim.workspace_counts';
+  static const sim_workspace_secret_warning = 'sim.workspace_secret_warning';
+  static const sim_export_workspace = 'sim.export_workspace';
+  static const sim_import_workspace = 'sim.import_workspace';
+  static const sim_workspace_json = 'sim.workspace_json';
+  static const sim_review_import = 'sim.review_import';
+  static const sim_replace_workspace = 'sim.replace_workspace';
+  static const sim_replace_workspace_confirm = 'sim.replace_workspace_confirm';
+  static const sim_disconnect_and_import = 'sim.disconnect_and_import';
+  static const sim_saving = 'sim.saving';
+  static const sim_saved_locally = 'sim.saved_locally';
+  static const sim_unsaved_workspace = 'sim.unsaved_workspace';
+  static const sim_save_failure = 'sim.save_failure';
+  static const sim_retry_save = 'sim.retry_save';
+  static const sim_loading_workspace = 'sim.loading_workspace';
+  static const sim_load_failure = 'sim.load_failure';
+  static const sim_load_failure_recovery = 'sim.load_failure_recovery';
+  static const sim_retry_load = 'sim.retry_load';
+  static const sim_support_scope = 'sim.support_scope';
+  static const sim_support_scope_body = 'sim.support_scope_body';
+  static const sim_unsupported_scope = 'sim.unsupported_scope';
+  static const sim_coordinate_policy = 'sim.coordinate_policy';
+  static const sim_coordinate_policy_body = 'sim.coordinate_policy_body';
+  static const sim_references = 'sim.references';
+  static const sim_reference_jtt808 = 'sim.reference_jtt808';
+  static const sim_reference_protocol = 'sim.reference_protocol';
+  static const sim_reference_osm = 'sim.reference_osm';
+  static const sim_reference_amap = 'sim.reference_amap';
+  static const sim_reference_baidu = 'sim.reference_baidu';
+  static const sim_reference_disclaimer = 'sim.reference_disclaimer';
+  static const sim_errors_required = 'sim.errors.required';
+  static const sim_errors_invalid_port = 'sim.errors.invalid_port';
+  static const sim_errors_invalid_phone = 'sim.errors.invalid_phone';
+  static const sim_errors_invalid_region = 'sim.errors.invalid_region';
+  static const sim_errors_invalid_identity = 'sim.errors.invalid_identity';
+  static const sim_errors_invalid_plate = 'sim.errors.invalid_plate';
+  static const sim_errors_invalid_interval = 'sim.errors.invalid_interval';
+  static const sim_errors_invalid_coordinates = 'sim.errors.invalid_coordinates';
+  static const sim_errors_invalid_motion = 'sim.errors.invalid_motion';
+  static const sim_errors_invalid_flags = 'sim.errors.invalid_flags';
+  static const sim_errors_disconnect_before_edit = 'sim.errors.disconnect_before_edit';
+  static const sim_errors_duplicate_phone = 'sim.errors.duplicate_phone';
+  static const sim_errors_terminal_in_use = 'sim.errors.terminal_in_use';
+  static const sim_errors_stop_before_edit = 'sim.errors.stop_before_edit';
+  static const sim_errors_route_in_use = 'sim.errors.route_in_use';
+  static const sim_errors_task_dependencies = 'sim.errors.task_dependencies';
+  static const sim_errors_connect_first = 'sim.errors.connect_first';
+  static const sim_errors_terminal_task_busy = 'sim.errors.terminal_task_busy';
+  static const sim_errors_disconnect_before_import = 'sim.errors.disconnect_before_import';
+  static const sim_errors_route_coordinate_header = 'sim.errors.route_coordinate_header';
+  static const sim_errors_route_point_count = 'sim.errors.route_point_count';
+  static const sim_errors_route_csv_invalid = 'sim.errors.route_csv_invalid';
+  static const sim_errors_route_zero_length = 'sim.errors.route_zero_length';
+  static const sim_errors_invalid_hex = 'sim.errors.invalid_hex';
+  static const sim_errors_invalid_workspace = 'sim.errors.invalid_workspace';
+  static const sim_errors_file_unreadable = 'sim.errors.file_unreadable';
+  static const sim_errors_invalid_theme = 'sim.errors.invalid_theme';
+  static const sim_errors_invalid_tianditu_key = 'sim.errors.invalid_tianditu_key';
+  static const sim_errors_tianditu_key_required = 'sim.errors.tianditu_key_required';
+  static const sim_errors_invalid_basemap_key = 'sim.errors.invalid_basemap_key';
+  static const sim_errors_basemap_endpoint_required = 'sim.errors.basemap_endpoint_required';
+  static const sim_errors_basemap_key_required = 'sim.errors.basemap_key_required';
+  static const sim_errors_invalid_basemap = 'sim.errors.invalid_basemap';
+  static const sim_errors_invalid_basemap_url = 'sim.errors.invalid_basemap_url';
+  static const sim_errors_basemap_attribution_required = 'sim.errors.basemap_attribution_required';
+  static const sim_errors_routing_rate = 'sim.errors.routing_rate';
+  static const sim_errors_routing_amap_authorization = 'sim.errors.routing_amap_authorization';
+  static const sim_errors_routing_settings = 'sim.errors.routing_settings';
+  static const sim_errors_routing_url = 'sim.errors.routing_url';
+  static const sim_errors_routing_key = 'sim.errors.routing_key';
+  static const sim_errors_routing_points = 'sim.errors.routing_points';
+  static const sim_errors_routing_stale = 'sim.errors.routing_stale';
+  static const sim_errors_routing_response = 'sim.errors.routing_response';
+  static const sim_errors_routing_no_route = 'sim.errors.routing_no_route';
+  static const sim_errors_routing_network = 'sim.errors.routing_network';
+  static const sim_errors_routing_limit = 'sim.errors.routing_limit';
+  static const sim_errors_routing_cancelled = 'sim.errors.routing_cancelled';
+  static const sim_errors_operation_failed = 'sim.errors.operation_failed';
+  static const sim_errors = 'sim.errors';
+  static const sim = 'sim';
 
-import 'package:easy_localization/easy_localization.dart' show AssetLoader;
-
-class CodegenLoader extends AssetLoader{
-  const CodegenLoader();
-
-  @override
-  Future<Map<String, dynamic>?> load(String path, Locale locale) {
-    return Future.value(mapLocales[locale.toString()]);
-  }
-
-  static const Map<String,dynamic> _en = {
-  "window": {
-    "debug_title": "Debug appearance",
-    "debug_help": "Preview only; native actions use the host OS. Resets on restart.",
-    "style": "Window style",
-    "minimize": "Minimize",
-    "maximize": "Maximize",
-    "restore": "Restore window",
-    "close": "Close window",
-    "exit_fullscreen": "Exit full screen",
-    "action_failed": "Could not change the window. Please try again."
-  },
-  "sim": {
-    "app_name": "JT/T808 Simulator",
-    "app_descriptor": "Terminal protocol workbench",
-    "protocol_short": "808 · 2013",
-    "protocol_transport": "JT/T 808-2013 · Native TCP",
-    "local_workspace": "Local workspace",
-    "console": "Console",
-    "terminals": "Terminals",
-    "routes_tasks": "Routes & tasks",
-    "protocol_logs": "Protocol logs",
-    "settings": "Settings & help",
-    "nav": {
-      "console": "Console",
-      "terminals": "Terminals",
-      "routes_tasks": "Routes",
-      "protocol_logs": "Logs",
-      "settings": "Settings"
-    },
-    "console_subtitle": "Inspect real connections, current positions, and messages before testing.",
-    "terminals_subtitle": "Manage each terminal’s identity and server connection.",
-    "routes_tasks_subtitle": "Import WGS84 polylines and assign trajectory playback to terminals.",
-    "logs_subtitle": "Keeps the latest {limit} records in memory, newest first.",
-    "settings_subtitle": "Appearance, language, workspace backups, and supported protocols.",
-    "dialog": {
-      "terminal_description": "Configure the terminal identity and server connection.",
-      "route_description": "Import WGS84 coordinates, validate the trajectory, then save.",
-      "task_description": "Choose a terminal and route for coordinate playback.",
-      "import_description": "Review a JSON backup before replacing local configuration.",
-      "export_description": "Copy a JSON backup of the current terminals, routes, and tasks.",
-      "log_description": "Inspect the recorded message, decoded fields, and original HEX."
-    },
-    "create_terminal": "Add terminal",
-    "edit_terminal": "Edit terminal",
-    "delete_terminal": "Delete terminal",
-    "create_route": "Add route",
-    "edit_route": "Edit route",
-    "delete_route": "Delete route",
-    "save_route": "Save route",
-    "create_task": "Add task",
-    "edit_task": "Edit task",
-    "delete_task": "Delete task",
-    "save_task": "Save task",
-    "save": "Save",
-    "cancel": "Cancel",
-    "discard_changes_title": "Discard unsaved changes?",
-    "discard_changes_body": "Your changes have not been saved. Discarding them cannot be undone.",
-    "keep_editing": "Keep editing",
-    "discard_changes": "Discard changes",
-    "close": "Close",
-    "delete": "Delete",
-    "clear": "Clear",
-    "actions": "Actions",
-    "view_all": "View all",
-    "copied": "Copied to clipboard.",
-    "copy_json": "Copy JSON",
-    "copy_hex": "Copy HEX",
-    "copy_csv": "Copy CSV",
-    "paste_csv": "Paste CSV",
-    "paste_json": "Paste JSON",
-    "import_file": "Import file",
-    "delete_named": "Delete “{name}”? This cannot be undone.",
-    "no_terminals": "No terminals yet",
-    "no_terminals_console": "Add a terminal and configure its server. Connections, tasks, and message counts come from real activity; no online devices are preloaded.",
-    "no_terminals_management": "Give each terminal a unique 12-digit phone number and device identity. Your workspace starts empty.",
-    "no_routes": "No routes yet",
-    "no_routes_hint": "Paste or import CSV with an explicit # WGS84 header and at least two coordinate points.",
-    "no_tasks": "No tasks yet",
-    "no_tasks_hint": "Choose a terminal and route to create a speed-based playback task.",
-    "no_tasks_dependencies": "Add a terminal and a route before creating a playback task.",
-    "no_assigned_task": "No task assigned to this terminal",
-    "manual_mode_hint": "Edit and report a position manually, or assign playback in Routes & tasks.",
-    "manage_routes_tasks": "Manage routes & tasks",
-    "online_terminals": "Online / all terminals",
-    "running_tasks": "Running tasks",
-    "messages_sent": "Messages sent",
-    "messages_received": "Messages received",
-    "messages_sent_received": "Sent / received",
-    "traffic_summary": "Sent {sent} · Received {received}",
-    "terminal": "Terminal",
-    "route": "Route",
-    "routes": "Routes",
-    "tasks": "Tasks",
-    "server": "Server",
-    "connection": "Connection",
-    "current_terminal": "Current terminal",
-    "connect": "Connect",
-    "disconnect": "Disconnect",
-    "reconnect": "Reconnect",
-    "connect_all": "Connect all",
-    "disconnect_all": "Disconnect all",
-    "heartbeat": "Send heartbeat",
-    "send_location": "Report applied position",
-    "connection_details": "Connection diagnostics. Check the address, port, and platform authentication before reconnecting.",
-    "open_console": "Open in console",
-    "phase": {
-      "disconnected": "Disconnected",
-      "connecting": "Connecting",
-      "registering": "Registering",
-      "authenticating": "Authenticating",
-      "online": "Authenticated · Online",
-      "failed": "Connection failed"
-    },
-    "terminal_connection": "Connection & identity",
-    "terminal_registration": "Registration · 2013 format",
-    "terminal_auth": "Platform authentication",
-    "terminal_intervals": "Reporting intervals",
-    "field": {
-      "name": "Terminal name",
-      "host": "Server address",
-      "port": "Port",
-      "phone": "Terminal phone · 12 digits",
-      "province": "Province ID",
-      "city": "City / county ID",
-      "manufacturer": "Manufacturer ID · up to 5",
-      "model": "Terminal model · up to 20 bytes",
-      "terminalId": "Terminal ID · up to 7",
-      "plate": "Vehicle identifier / plate",
-      "plateColor": "Plate color",
-      "authCode": "Authentication code",
-      "heartbeatSeconds": "Heartbeat interval (s)",
-      "locationIntervalSeconds": "Position interval (s)",
-      "autoReconnect": "Automatic reconnect",
-      "latitude": "Latitude (WGS84)",
-      "longitude": "Longitude (WGS84)",
-      "speed": "Speed (km/h)",
-      "altitude": "Altitude (m)",
-      "direction": "Heading (0–359°)",
-      "mileage": "Mileage (km)",
-      "alarm": "Alarm flags · 32-bit HEX",
-      "status": "Status flags · 32-bit HEX"
-    },
-    "identity_manufacturer_hint": "Use 1–5 uppercase letters or digits.",
-    "identity_model_hint": "Use 1–20 printable ASCII characters.",
-    "identity_terminal_hint": "Use 1–7 uppercase letters or digits.",
-    "plate_color": {
-      "0": "0 · Unregistered",
-      "1": "1 · Blue",
-      "2": "2 · Yellow",
-      "3": "3 · Black",
-      "4": "4 · White",
-      "9": "9 · Other"
-    },
-    "auth_hint": "Leave empty to register first. Codes returned by the platform are stored in the local workspace.",
-    "show_auth": "Show authentication code",
-    "hide_auth": "Hide authentication code",
-    "auto_reconnect_hint": "Off by default. When enabled, unexpected disconnects trigger retries; a manual disconnect stays disconnected.",
-    "workspace_id": "Internal workspace ID (read only)",
-    "terminals_help": "Uses 2013 registration fields: manufacturer up to 5 bytes, model up to 20 bytes, and terminal ID up to 7 bytes. Disconnect before changing configuration.",
-    "number_range": "Enter a value between {min} and {max}.",
-    "current_position": "Current position",
-    "coordinates": "Latitude, longitude",
-    "position_local": "Local position draft; no confirmed position report yet.",
-    "position_reporting": "Current local position. A sent record does not mean the platform acknowledged the position.",
-    "last_sent": "Last message sent",
-    "last_sent_value": "Last message sent: {time}",
-    "not_sent": "Not sent yet",
-    "unit_kmh": "km/h",
-    "manual_location": "Manual position & flags",
-    "manual_location_hint": "Apply locally first, then report immediately when online.",
-    "manual_during_task": "Playback controls the coordinates. You can still apply ACC, position-fixed, and alarm flags; pause or stop before editing coordinates manually.",
-    "status_bits": "Common status flags",
-    "alarm_bits": "Common alarms",
-    "acc": "ACC on · bit 0",
-    "positioned": "Position fixed · bit 1",
-    "alarm_emergency": "Emergency · bit 0",
-    "alarm_overspeed": "Overspeed · bit 1",
-    "alarm_fatigue": "Fatigue driving · bit 2",
-    "alarm_low_voltage": "Low supply voltage · bit 7",
-    "alarm_power_loss": "Supply disconnected · bit 8",
-    "hex32_hint": "Use 1–8 hexadecimal digits, optionally prefixed by 0x; range 0x00000000–0xFFFFFFFF.",
-    "apply_location": "Apply locally",
-    "apply_send_location": "Apply & report",
-    "unsaved_location": "Unapplied changes",
-    "location_applied": "Local position applied. No message was sent by this action.",
-    "location_sent": "Position message sent. Check the protocol log for the platform response.",
-    "current_task": "Current task",
-    "start_task": "Start",
-    "pause_task": "Pause",
-    "resume_task": "Resume",
-    "stop_task": "Stop",
-    "task_phase": {
-      "stopped": "Stopped",
-      "running": "Playing",
-      "paused": "Paused",
-      "completed": "Completed"
-    },
-    "task_waiting": "Waiting for terminal to be online",
-    "task_progress": "Progress {percent}% · Played {distance} km",
-    "route_name": "Route name",
-    "task_name": "Task name",
-    "route_csv": "Coordinate CSV",
-    "route_format_help": "Start with # WGS84, followed by latitude,longitude,speed rows. Use 2–10000 points and speeds of 1–200 km/h. BD-09 and GCJ-02 coordinates are not converted automatically.",
-    "example_polyline": "Use example polyline (not road navigation)",
-    "preview_route": "Validate & preview",
-    "preview_stale": "Content changed; preview has not been refreshed.",
-    "route_summary": "{points} points · {distance} km",
-    "routes_count": "Routes · {count}",
-    "tasks_count": "Tasks · {count}",
-    "routes_help": "Distances are calculated from coordinates. Lines do not imply drivable roads.",
-    "loop": "Loop playback",
-    "loop_hint": "Restart from the first point after the last. Connecting roads are not planned automatically.",
-    "loop_enabled": "Loop",
-    "single_pass": "Single pass",
-    "task_start_hint": "Starting attempts to connect the terminal. Playback advances only while authenticated and online. Each terminal allows one running or paused task at a time.",
-    "playback_help": "Progress and mileage reflect actual playback. Disconnecting pauses the task; resume manually after reconnecting. Movement advances at the terminal’s reporting interval, not as road navigation.",
-    "map_offline": "WGS84 · Offline coordinate plot",
-    "map_online": "WGS84 · Online basemap",
-    "online_basemap": "Online tiles",
-    "map_online_hint": "Load OpenStreetMap tiles on demand. Requires network access and sends tile requests to the provider.",
-    "no_coordinates": "Add coordinates to preview a trajectory.",
-    "coordinate_plot": "Actual WGS84 coordinate polyline without road data",
-    "plot_bounds": "Latitude {lat}\nLongitude {lon}",
-    "map_disclaimer": "Blue lines show the input trajectory, not road navigation. Coordinates are never converted silently.",
-    "map_failed": "Online tiles failed to load. The offline coordinate plot is shown instead. Check the network before enabling online tiles again.",
-    "osm_attribution": "© OpenStreetMap contributors",
-    "latest_logs": "Latest messages",
-    "no_logs": "No logs yet",
-    "no_logs_hint": "Real send, receive, and event records appear after connecting a terminal or sending a message.",
-    "no_matching_logs": "No records match these filters. Clear the search or broaden the filters.",
-    "pause_display": "Pause display",
-    "resume_display": "Resume display",
-    "clear_logs": "Clear logs",
-    "clear_logs_confirm": "Clear in-memory logs only? Terminal connections and receiving will continue.",
-    "copy_logs_json": "Copy logs JSON",
-    "export_logs_hint": "Copies live logs for the selected terminal. Text and direction filters, and display pause, do not affect exported records.",
-    "terminal_filter": "Filter terminal",
-    "direction_filter": "Filter direction",
-    "all_terminals": "All terminals",
-    "all_directions": "All directions",
-    "log_direction": {
-      "sent": "Sent",
-      "received": "Received",
-      "event": "Event"
-    },
-    "search_logs": "Search message ID / HEX / text",
-    "search_logs_hint": "For example 0200 or 7E…",
-    "clear_search": "Clear search",
-    "display_paused_hint": "Only this list is frozen; terminals are still receiving. There are {count} live records in memory.",
-    "log_count": "Showing {visible} / {total} records",
-    "log_detail": "Message details",
-    "time": "Time",
-    "direction": "Direction",
-    "message_id": "Message ID",
-    "sequence": "Sequence",
-    "body_length": "Body length",
-    "byte_count": "{count} bytes",
-    "header_validation": "Frame validation",
-    "header_valid": "2013 header, length, and XOR checksum passed",
-    "header_invalid": "This record is not a supported complete 2013 frame. Original diagnostics and HEX are preserved below; check delimiters, escaping, length, and checksum.",
-    "no_packet": "This event has no raw packet.",
-    "raw_hex": "Raw HEX",
-    "raw_send": "Send a raw HEX frame",
-    "raw_send_hint": "Authenticated online terminals only. Supply a complete 2013 frame; checksums are not generated for you.",
-    "send_terminal": "Sending terminal",
-    "raw_hex_hint": "Complete hexadecimal frame with both 7E delimiters",
-    "send_raw": "Send raw frame",
-    "raw_send_failed": "Frame was not sent. Check 7E delimiters, byte pairs, escaping, length, XOR checksum, and terminal phone, then retry.",
-    "raw_sent": "Raw frame sent. Check the platform response.",
-    "appearance_language": "Appearance & language",
-    "theme": "Theme",
-    "theme_mode": {
-      "system": "Follow system",
-      "light": "Light",
-      "dark": "Dark"
-    },
-    "language": "Interface language",
-    "language_name": {
-      "zh": "简体中文",
-      "en": "English"
-    },
-    "workspace": "Workspace",
-    "workspace_help": "Terminals, routes, tasks, and theme are stored locally. Connections, playback progress, and logs are not restored as online state.",
-    "workspace_contents": "Current contents",
-    "workspace_counts": "{terminals} terminals · {routes} routes · {tasks} tasks",
-    "workspace_secret_warning": "Workspace JSON includes plaintext authentication codes and server details. Store and transfer it only on trusted devices; remove sensitive fields before sharing.",
-    "export_workspace": "Export workspace JSON",
-    "import_workspace": "Import workspace JSON",
-    "workspace_json": "Workspace JSON",
-    "review_import": "Review & import",
-    "replace_workspace": "Replace the local workspace?",
-    "replace_workspace_confirm": "Import {terminals} terminals, {routes} routes, and {tasks} tasks. Continuing disconnects all terminals and clears task runtime before replacing current configuration. Back up first; this cannot be undone.",
-    "disconnect_and_import": "Disconnect & replace",
-    "saving": "Saving…",
-    "saved_locally": "Local workspace",
-    "unsaved_workspace": "Changes not saved to disk",
-    "save_failure": "Local save failed. Changes are still in memory and may be lost when you quit. Retry saving, or export a workspace backup from Settings.",
-    "retry_save": "Retry save",
-    "loading_workspace": "Loading local workspace…",
-    "load_failure": "Could not load workspace",
-    "load_failure_recovery": "Existing data is protected: creating and replacing the workspace is blocked. Check local storage permissions and retry. Existing files are unchanged.",
-    "retry_load": "Retry loading",
-    "support_scope": "Supported features",
-    "support_scope_body": "JT/T 808-2013 over native TCP. Supports registration, authentication, heartbeat, position reporting, platform general responses, position queries, parameter setting and queries, text delivery, and temporary position tracking. Logs show actual transmitted frames.",
-    "unsupported_scope": "JT/T 808-2019, JT/T 1078 audio/video, encrypted messages, and segmentation are not supported. Unknown messages are not presented as supported behavior.",
-    "coordinate_policy": "Coordinates & basemaps",
-    "coordinate_policy_body": "Routes require explicit WGS84 coordinates. Actual polylines are plotted offline by default. OpenStreetMap tiles are optional and fall back on failure. No Baidu key or invented city roads are used.",
-    "references": "References",
-    "reference_jtt808": "SmallChi / JT808 · Protocol implementation",
-    "reference_protocol": "glaciall / jtt808-simulator · Simulator reference",
-    "reference_osm": "OpenStreetMap · Attribution & license",
-    "reference_disclaimer": "Reference projects inform protocol and interaction design; their full feature sets are not claimed by this tool.",
-    "errors": {
-      "required": "Complete this field.",
-      "invalid_port": "Port must be between 1 and 65535.",
-      "invalid_phone": "Terminal phone must contain exactly 12 digits.",
-      "invalid_region": "Province and city IDs must be between 0 and 65535.",
-      "invalid_identity": "Check the characters and lengths of manufacturer, model, and terminal ID.",
-      "invalid_plate": "Enter a vehicle identifier and select a valid plate color.",
-      "invalid_interval": "Heartbeat and position intervals must be between 1 and 3600 seconds.",
-      "invalid_coordinates": "Use finite coordinates: latitude -90–90 and longitude -180–180.",
-      "invalid_motion": "Check the allowed speed, altitude, and heading ranges.",
-      "invalid_flags": "Use valid unsigned 32-bit HEX flags and check the mileage range.",
-      "disconnect_before_edit": "This terminal is connecting or online. Disconnect before editing or deleting it.",
-      "duplicate_phone": "Another terminal uses this phone number. Enter a unique number.",
-      "terminal_in_use": "This terminal is referenced by a task. Delete the related task first.",
-      "stop_before_edit": "Stop the related task before editing configuration.",
-      "route_in_use": "This route is referenced by a task. Delete the related task first.",
-      "task_dependencies": "Create and select a valid terminal and route first.",
-      "connect_first": "Connect the terminal and wait for authenticated online status before sending.",
-      "terminal_task_busy": "This terminal already has a running or paused task. Stop that task first.",
-      "disconnect_before_import": "Disconnect all terminals before replacing the workspace.",
-      "route_coordinate_header": "The first CSV line must be # WGS84. Confirm and convert source coordinates yourself; automatic conversion is not performed.",
-      "route_point_count": "A route must contain 2–10000 points.",
-      "route_csv_invalid": "Each row must be latitude,longitude,speed with valid coordinates and speed of 1–200 km/h.",
-      "route_zero_length": "Total route length must be greater than zero. Check for coincident points.",
-      "invalid_hex": "Enter complete hexadecimal byte pairs, optionally separated by whitespace, up to 2074 bytes.",
-      "invalid_workspace": "Workspace JSON is invalid or its version is unsupported. Check terminal fields, unique IDs, WGS84 routes, and task references before retrying. Current data was not replaced.",
-      "file_unreadable": "Cannot read the file, or it exceeds 20 MB. Select a valid text file or paste from the clipboard.",
-      "invalid_theme": "Invalid theme option. Select a theme again.",
-      "operation_failed": "The action could not finish. Check input, connection, and system permissions, then retry. Protocol diagnostics are available in the log."
-    }
-  }
-};
-static const Map<String,dynamic> _zh = {
-  "window": {
-    "debug_title": "调试外观",
-    "debug_help": "仅预览外观，窗口操作仍使用当前系统，重启后恢复。",
-    "style": "窗口样式",
-    "minimize": "最小化",
-    "maximize": "最大化",
-    "restore": "还原窗口",
-    "close": "关闭窗口",
-    "exit_fullscreen": "退出全屏",
-    "action_failed": "窗口操作失败，请重试。"
-  },
-  "sim": {
-    "app_name": "JT/T808 模拟器",
-    "app_descriptor": "终端协议联调工作台",
-    "protocol_short": "808 · 2013",
-    "protocol_transport": "JT/T 808-2013 · 原生 TCP",
-    "local_workspace": "本地工作区",
-    "console": "控制台",
-    "terminals": "终端管理",
-    "routes_tasks": "线路与任务",
-    "protocol_logs": "协议日志",
-    "settings": "设置与帮助",
-    "nav": {
-      "console": "控制台",
-      "terminals": "终端",
-      "routes_tasks": "线路任务",
-      "protocol_logs": "报文",
-      "settings": "设置"
-    },
-    "console_subtitle": "查看真实连接、当前位置与报文，按需开始联调。",
-    "terminals_subtitle": "管理独立的终端身份与服务器连接。",
-    "routes_tasks_subtitle": "导入 WGS84 折线，并为终端安排轨迹回放。",
-    "logs_subtitle": "按接收顺序保留最近 {limit} 条记录，最新记录在上方。",
-    "settings_subtitle": "外观、语言、工作区备份与协议支持范围。",
-    "dialog": {
-      "terminal_description": "配置终端标识和服务器连接，保存后按需连接。",
-      "route_description": "导入 WGS84 坐标，验证轨迹后保存。",
-      "task_description": "选择终端与线路，配置坐标轨迹回放任务。",
-      "import_description": "检查 JSON 备份后替换本地终端、线路与任务。",
-      "export_description": "复制当前终端、线路与任务的 JSON 备份。",
-      "log_description": "查看收发信息、解析字段和原始 HEX 报文。"
-    },
-    "create_terminal": "新增终端",
-    "edit_terminal": "编辑终端",
-    "delete_terminal": "删除终端",
-    "create_route": "新增线路",
-    "edit_route": "编辑线路",
-    "delete_route": "删除线路",
-    "save_route": "保存线路",
-    "create_task": "新增任务",
-    "edit_task": "编辑任务",
-    "delete_task": "删除任务",
-    "save_task": "保存任务",
-    "save": "保存",
-    "cancel": "取消",
-    "discard_changes_title": "放弃未保存的修改？",
-    "discard_changes_body": "当前修改尚未保存。放弃后将无法恢复。",
-    "keep_editing": "继续编辑",
-    "discard_changes": "放弃修改",
-    "close": "关闭",
-    "delete": "删除",
-    "clear": "清除",
-    "actions": "操作",
-    "view_all": "查看全部",
-    "copied": "已复制到剪贴板。",
-    "copy_json": "复制 JSON",
-    "copy_hex": "复制 HEX",
-    "copy_csv": "复制 CSV",
-    "paste_csv": "粘贴 CSV",
-    "paste_json": "粘贴 JSON",
-    "import_file": "从文件导入",
-    "delete_named": "确认删除“{name}”？此操作无法撤销。",
-    "no_terminals": "尚未添加终端",
-    "no_terminals_console": "先创建终端并配置服务器。连接、任务和报文统计将来自实际运行，不会预置在线设备。",
-    "no_terminals_management": "为每个模拟终端设置唯一的 12 位手机号与设备身份。工作区初始为空。",
-    "no_routes": "尚未添加线路",
-    "no_routes_hint": "粘贴或导入带有 # WGS84 声明的 CSV，至少需要两个坐标点。",
-    "no_tasks": "尚未安排任务",
-    "no_tasks_hint": "选择一个终端与一条线路，创建按速度回放的任务。",
-    "no_tasks_dependencies": "先添加终端与线路，之后即可创建回放任务。",
-    "no_assigned_task": "当前终端没有任务",
-    "manual_mode_hint": "可以手动编辑位置并上报，或前往线路与任务安排回放。",
-    "manage_routes_tasks": "管理线路与任务",
-    "online_terminals": "在线终端 / 全部",
-    "running_tasks": "运行中任务",
-    "messages_sent": "累计发送",
-    "messages_received": "累计接收",
-    "messages_sent_received": "发送 / 接收",
-    "traffic_summary": "发送 {sent} · 接收 {received}",
-    "terminal": "终端",
-    "route": "线路",
-    "routes": "线路",
-    "tasks": "任务",
-    "server": "服务器",
-    "connection": "连接状态",
-    "current_terminal": "当前终端",
-    "connect": "连接",
-    "disconnect": "断开",
-    "reconnect": "重新连接",
-    "connect_all": "全部连接",
-    "disconnect_all": "全部断开",
-    "heartbeat": "发送心跳",
-    "send_location": "上报已应用位置",
-    "connection_details": "连接诊断；失败后请检查地址、端口与平台鉴权，再重新连接。",
-    "open_console": "在控制台打开",
-    "phase": {
-      "disconnected": "未连接",
-      "connecting": "连接中",
-      "registering": "注册中",
-      "authenticating": "鉴权中",
-      "online": "已鉴权在线",
-      "failed": "连接失败"
-    },
-    "terminal_connection": "连接与标识",
-    "terminal_registration": "注册信息 · 2013 格式",
-    "terminal_auth": "平台鉴权",
-    "terminal_intervals": "上报间隔",
-    "field": {
-      "name": "终端名称",
-      "host": "服务器地址",
-      "port": "端口",
-      "phone": "终端手机号 · 12 位",
-      "province": "省域 ID",
-      "city": "市县域 ID",
-      "manufacturer": "制造商 ID · 最多 5 位",
-      "model": "终端型号 · 最多 20 字节",
-      "terminalId": "终端 ID · 最多 7 位",
-      "plate": "车辆标识 / 号牌",
-      "plateColor": "号牌颜色",
-      "authCode": "鉴权码",
-      "heartbeatSeconds": "心跳间隔（秒）",
-      "locationIntervalSeconds": "位置上报间隔（秒）",
-      "autoReconnect": "自动重连",
-      "latitude": "纬度（WGS84）",
-      "longitude": "经度（WGS84）",
-      "speed": "速度（km/h）",
-      "altitude": "海拔（m）",
-      "direction": "方向（0–359°）",
-      "mileage": "里程（km）",
-      "alarm": "报警标志 · 32 位 HEX",
-      "status": "状态标志 · 32 位 HEX"
-    },
-    "identity_manufacturer_hint": "请输入 1–5 位大写字母或数字。",
-    "identity_model_hint": "请输入 1–20 个可打印 ASCII 字符。",
-    "identity_terminal_hint": "请输入 1–7 位大写字母或数字。",
-    "plate_color": {
-      "0": "0 · 未上牌",
-      "1": "1 · 蓝色",
-      "2": "2 · 黄色",
-      "3": "3 · 黑色",
-      "4": "4 · 白色",
-      "9": "9 · 其他"
-    },
-    "auth_hint": "留空时先注册并获取鉴权码；平台返回的鉴权码会保存在本地工作区。",
-    "show_auth": "显示鉴权码",
-    "hide_auth": "隐藏鉴权码",
-    "auto_reconnect_hint": "默认关闭。开启后，异常断线会尝试重连；手动断开后不会自动连接。",
-    "workspace_id": "内部工作区 ID（只读）",
-    "terminals_help": "使用 JT/T 808-2013 注册字段：制造商最多 5 字节、型号最多 20 字节、终端 ID 最多 7 字节。连接期间先断开，再修改配置。",
-    "number_range": "请输入 {min} 到 {max} 之间的数值。",
-    "current_position": "当前位置",
-    "coordinates": "纬度，经度",
-    "position_local": "本地位置草稿；尚无位置已上报的确认。",
-    "position_reporting": "当前本地位置；发送记录不代表平台已确认收到位置。",
-    "last_sent": "最近发送报文",
-    "last_sent_value": "最近发送报文：{time}",
-    "not_sent": "尚未发送",
-    "unit_kmh": "km/h",
-    "manual_location": "手动位置与标志",
-    "manual_location_hint": "先应用到本地终端，在线后可立即上报。",
-    "manual_during_task": "轨迹正在回放，坐标由任务控制。仍可修改并应用 ACC、定位与报警标志；手动改坐标请先暂停或停止任务。",
-    "status_bits": "常用状态",
-    "alarm_bits": "常用报警",
-    "acc": "ACC 开启 · bit 0",
-    "positioned": "已定位 · bit 1",
-    "alarm_emergency": "紧急报警 · bit 0",
-    "alarm_overspeed": "超速报警 · bit 1",
-    "alarm_fatigue": "疲劳驾驶 · bit 2",
-    "alarm_low_voltage": "主电源欠压 · bit 7",
-    "alarm_power_loss": "主电源掉电 · bit 8",
-    "hex32_hint": "输入 1–8 位十六进制字符，可带 0x；范围 0x00000000–0xFFFFFFFF。",
-    "apply_location": "应用到本地",
-    "apply_send_location": "应用并上报",
-    "unsaved_location": "尚有未应用的修改",
-    "location_applied": "已应用本地位置；此次操作没有发送报文。",
-    "location_sent": "位置报文已发送；请在协议日志中检查平台应答。",
-    "current_task": "当前任务",
-    "start_task": "启动",
-    "pause_task": "暂停",
-    "resume_task": "继续",
-    "stop_task": "停止",
-    "task_phase": {
-      "stopped": "未运行",
-      "running": "回放中",
-      "paused": "已暂停",
-      "completed": "已完成"
-    },
-    "task_waiting": "等待终端上线",
-    "task_progress": "进度 {percent}% · 已回放 {distance} km",
-    "route_name": "线路名称",
-    "task_name": "任务名称",
-    "route_csv": "坐标点 CSV",
-    "route_format_help": "首行必须是 # WGS84，之后每行为 latitude,longitude,speed。支持 2–10000 个点，速度 1–200 km/h。拒绝自动混用 BD-09 / GCJ-02 坐标。",
-    "example_polyline": "填入示例折线（非道路导航）",
-    "preview_route": "验证并预览",
-    "preview_stale": "内容已修改，预览尚未更新。",
-    "route_summary": "{points} 个坐标点 · {distance} km",
-    "routes_count": "线路 · {count}",
-    "tasks_count": "任务 · {count}",
-    "routes_help": "距离由坐标实际计算，线路不代表可行驶道路。",
-    "loop": "循环回放",
-    "loop_hint": "到达终点后从起点重新播放，不自动规划连接道路。",
-    "loop_enabled": "循环",
-    "single_pass": "单次回放",
-    "task_start_hint": "启动会尝试连接所选终端。只有鉴权在线时才推进轨迹；同一终端同时只允许一个运行或暂停中的任务。",
-    "playback_help": "进度与里程来自实际回放。断开终端会暂停任务；重新上线后请手动继续。回放按终端位置上报间隔推进，不是道路导航。",
-    "map_offline": "WGS84 · 离线坐标轨迹",
-    "map_online": "WGS84 · 在线底图",
-    "online_basemap": "在线底图",
-    "map_online_hint": "按需从 OpenStreetMap 加载底图；需要网络，并会向图源请求瓦片。",
-    "no_coordinates": "添加坐标后可查看轨迹。",
-    "coordinate_plot": "真实 WGS84 坐标折线图，不含道路数据",
-    "plot_bounds": "纬度 {lat}\n经度 {lon}",
-    "map_disclaimer": "蓝线仅表示输入轨迹，不是道路导航；不进行坐标系自动转换。",
-    "map_failed": "在线底图加载失败，已回退到离线坐标图。可检查网络后重新开启在线底图。",
-    "osm_attribution": "© OpenStreetMap 贡献者",
-    "latest_logs": "最新报文",
-    "no_logs": "暂无日志",
-    "no_logs_hint": "连接终端或发送报文后，真实的收发与事件记录将显示在这里。",
-    "no_matching_logs": "没有符合当前筛选的记录；请清空搜索或放宽筛选条件。",
-    "pause_display": "暂停显示",
-    "resume_display": "继续显示",
-    "clear_logs": "清除日志",
-    "clear_logs_confirm": "仅清除内存中的日志，终端连接与接收不会停止。是否继续？",
-    "copy_logs_json": "复制日志 JSON",
-    "export_logs_hint": "复制所选终端的实时日志。文本、方向筛选与暂停显示不会影响导出的记录。",
-    "terminal_filter": "筛选终端",
-    "direction_filter": "筛选方向",
-    "all_terminals": "全部终端",
-    "all_directions": "全部方向",
-    "log_direction": {
-      "sent": "发送",
-      "received": "接收",
-      "event": "事件"
-    },
-    "search_logs": "搜索消息 ID / HEX / 内容",
-    "search_logs_hint": "例如 0200 或 7E…",
-    "clear_search": "清空搜索",
-    "display_paused_hint": "仅冻结列表显示，终端仍在接收。目前内存中有 {count} 条实时记录。",
-    "log_count": "显示 {visible} / {total} 条记录",
-    "log_detail": "报文详情",
-    "time": "时间",
-    "direction": "方向",
-    "message_id": "消息 ID",
-    "sequence": "流水号",
-    "body_length": "消息体长度",
-    "byte_count": "{count} 字节",
-    "header_validation": "帧校验",
-    "header_valid": "2013 帧头、长度与 XOR 校验通过",
-    "header_invalid": "该记录无法解析为受支持的完整 2013 帧。下方保留原始诊断与 HEX，请检查边界、转义、长度和校验码。",
-    "no_packet": "此事件没有原始报文。",
-    "raw_hex": "原始 HEX",
-    "raw_send": "发送原始 HEX 帧",
-    "raw_send_hint": "仅已鉴权在线终端可用。使用完整 2013 帧，不会替你生成校验码。",
-    "send_terminal": "发送终端",
-    "raw_hex_hint": "含首尾 7E 的完整十六进制帧",
-    "send_raw": "发送原始帧",
-    "raw_send_failed": "报文未发送。请检查首尾 7E、字节对、转义、长度、XOR 校验及终端手机号，修正后重试。",
-    "raw_sent": "原始帧已发送，请检查平台应答。",
-    "appearance_language": "外观与语言",
-    "theme": "主题",
-    "theme_mode": {
-      "system": "跟随系统",
-      "light": "浅色",
-      "dark": "深色"
-    },
-    "language": "界面语言",
-    "language_name": {
-      "zh": "简体中文",
-      "en": "English"
-    },
-    "workspace": "工作区",
-    "workspace_help": "终端、线路、任务与主题保存在本机；连接、运行进度与日志不会作为在线状态恢复。",
-    "workspace_contents": "当前内容",
-    "workspace_counts": "{terminals} 个终端 · {routes} 条线路 · {tasks} 个任务",
-    "workspace_secret_warning": "工作区 JSON 包含明文鉴权码与服务器信息。请仅在可信设备保存和传输，分享前删除敏感字段。",
-    "export_workspace": "导出工作区 JSON",
-    "import_workspace": "导入工作区 JSON",
-    "workspace_json": "工作区 JSON",
-    "review_import": "检查并导入",
-    "replace_workspace": "确认覆盖本地工作区",
-    "replace_workspace_confirm": "将导入 {terminals} 个终端、{routes} 条线路、{tasks} 个任务。继续后会先断开全部终端、清除任务运行状态，再覆盖当前配置。请先备份；此操作无法撤销。",
-    "disconnect_and_import": "断开并覆盖导入",
-    "saving": "正在保存…",
-    "saved_locally": "本地工作区",
-    "unsaved_workspace": "更改尚未写入磁盘",
-    "save_failure": "本地保存失败。当前更改仍在内存中，退出应用可能丢失。请重试保存，或在设置中导出工作区备份。",
-    "retry_save": "重试保存",
-    "loading_workspace": "正在读取本地工作区…",
-    "load_failure": "读取工作区失败",
-    "load_failure_recovery": "为保护已有数据，当前不会创建或覆盖工作区。请检查本地存储权限后重试；原有文件保持不变。",
-    "retry_load": "重新读取",
-    "support_scope": "支持范围",
-    "support_scope_body": "JT/T 808-2013，使用原生 TCP 连接。支持终端注册、鉴权、心跳、位置上报、平台通用应答、位置查询、参数设置与查询、文本下发及临时位置跟踪。协议日志展示实际收发帧。",
-    "unsupported_scope": "当前不支持 JT/T 808-2019、JT/T 1078 音视频、加密消息或分包。未知消息不会被伪装成已支持的业务。",
-    "coordinate_policy": "坐标与底图",
-    "coordinate_policy_body": "线路只接受显式 WGS84 坐标。默认离线显示真实坐标折线；在线 OpenStreetMap 底图由用户按需开启，加载失败会回退。不会使用百度密钥或绘制虚构城市道路。",
-    "references": "参考资料",
-    "reference_jtt808": "SmallChi / JT808 · 协议实现参考",
-    "reference_protocol": "glaciall / jtt808-simulator · 模拟器参考",
-    "reference_osm": "OpenStreetMap · 数据归属与许可",
-    "reference_disclaimer": "参考项目用于核对协议与交互，不代表本工具已实现其全部功能。",
-    "errors": {
-      "required": "请填写此项。",
-      "invalid_port": "端口范围为 1–65535。",
-      "invalid_phone": "终端手机号必须是 12 位数字。",
-      "invalid_region": "省市 ID 范围为 0–65535。",
-      "invalid_identity": "请检查制造商、型号与终端 ID 的字符及长度。",
-      "invalid_plate": "请填写车辆标识并选择有效号牌颜色。",
-      "invalid_interval": "心跳与位置上报间隔范围为 1–3600 秒。",
-      "invalid_coordinates": "纬度须为 -90–90，经度须为 -180–180，且必须是有效数值。",
-      "invalid_motion": "请检查速度、海拔与方向的有效范围。",
-      "invalid_flags": "请输入有效的无符号 32 位 HEX 标志，并检查里程范围。",
-      "disconnect_before_edit": "终端正在连接或在线；请先断开，再编辑或删除。",
-      "duplicate_phone": "该手机号已被其他终端使用，请设置唯一手机号。",
-      "terminal_in_use": "该终端被任务引用，请先删除关联任务。",
-      "stop_before_edit": "请先停止关联任务，再修改配置。",
-      "route_in_use": "线路被任务引用，请先删除关联任务。",
-      "task_dependencies": "请先创建并选择有效的终端和线路。",
-      "connect_first": "请先连接终端并等待鉴权在线，再发送报文。",
-      "terminal_task_busy": "该终端已有运行或暂停中的任务，请先停止原任务。",
-      "disconnect_before_import": "请先断开全部终端，再覆盖导入。",
-      "route_coordinate_header": "CSV 首行必须为 # WGS84。请先确认并转换数据源坐标系，程序不会自动转换。",
-      "route_point_count": "线路必须包含 2–10000 个坐标点。",
-      "route_csv_invalid": "每行须为 latitude,longitude,speed；坐标应有效，速度范围为 1–200 km/h。",
-      "route_zero_length": "线路总长度必须大于零，请检查坐标点是否完全重合。",
-      "invalid_hex": "请输入完整十六进制字节对，可包含空格，且不得超过 2074 字节。",
-      "invalid_workspace": "工作区 JSON 无效或版本不受支持。请检查终端字段、唯一 ID、WGS84 线路及任务引用后重试。当前数据未被覆盖。",
-      "file_unreadable": "无法读取所选文件，或文件超过 20 MB。请选择有效文本文件，或改用剪贴板粘贴。",
-      "invalid_theme": "主题选项无效，请重新选择。",
-      "operation_failed": "操作未完成。请检查输入、连接与系统权限后重试；具体协议诊断可在日志中查看。"
-    }
-  }
-};
-static const Map<String, Map<String,dynamic>> mapLocales = {"en": _en, "zh": _zh};
 }

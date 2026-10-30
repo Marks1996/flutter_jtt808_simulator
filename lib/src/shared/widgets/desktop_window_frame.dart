@@ -159,19 +159,21 @@ class _DesktopWindowFrameState extends State<DesktopWindowFrame>
   Widget _buildFrame(BuildContext context) {
     if (!DesktopWindowService.isSupported) return widget.child;
     final expanded = _maximized || _fullScreen;
+    // All desktop captions overlay the page. Navigation consumes the inset;
+    // scrollable workspaces include it in their initial content padding.
+    final mediaQuery = MediaQuery.of(context);
+    final content = MediaQuery(
+      data: mediaQuery.copyWith(
+        padding: mediaQuery.padding + const EdgeInsets.only(top: _barHeight),
+      ),
+      child: widget.child,
+    );
     if (PlatformInfo.isMacOS && windowStyle == TargetPlatform.macOS) {
       // Hidden-inset style (reference: cursor-byok's MacTitleBarHiddenInset
       // window): the content fills the whole window, the native traffic lights
       // float above it, and an invisible strip along the top carries the drag
-      // gesture. Content is pushed down via MediaQuery padding so nothing sits
-      // under the traffic lights.
-      final mediaQuery = MediaQuery.of(context);
-      final content = MediaQuery(
-        data: mediaQuery.copyWith(
-          padding: mediaQuery.padding + const EdgeInsets.only(top: _barHeight),
-        ),
-        child: widget.child,
-      );
+      // gesture. Consumers keep navigation below the traffic lights, but put
+      // the inset inside scrolling content so it can fade behind the title area.
       final frame = DecoratedBox(
         decoration: BoxDecoration(
           border: expanded
@@ -212,20 +214,28 @@ class _DesktopWindowFrameState extends State<DesktopWindowFrame>
         ),
         child: Padding(
           padding: expanded ? EdgeInsets.zero : const EdgeInsets.all(1),
-          child: Column(
+          child: Stack(
             children: [
-              DesktopWindowBar(
-                macStyle: windowStyle == TargetPlatform.macOS,
-                focused: _focused,
-                maximized: _maximized,
-                fullScreen: _fullScreen,
-                enabled: !_operation.isLoading,
-                onDrag: () => _run(windowManager.startDragging),
-                onToggleMaximize: () => _run(_toggleMaximize),
-                onMinimize: () => _run(windowManager.minimize),
-                onClose: () => _run(windowManager.close),
+              Positioned.fill(
+                child: Semantics(container: true, child: content),
               ),
-              Expanded(child: Semantics(container: true, child: widget.child)),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: _barHeight,
+                child: DesktopWindowBar(
+                  macStyle: windowStyle == TargetPlatform.macOS,
+                  focused: _focused,
+                  maximized: _maximized,
+                  fullScreen: _fullScreen,
+                  enabled: !_operation.isLoading,
+                  onDrag: () => _run(windowManager.startDragging),
+                  onToggleMaximize: () => _run(_toggleMaximize),
+                  onMinimize: () => _run(windowManager.minimize),
+                  onClose: () => _run(windowManager.close),
+                ),
+              ),
             ],
           ),
         ),
@@ -296,6 +306,7 @@ class DesktopWindowBar extends StatelessWidget {
       child: SizedBox(
         height: AppSpacing.xl,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(width: AppSpacing.sm),
             if (macStyle) ...[

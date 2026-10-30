@@ -117,6 +117,16 @@ class SimulatorController extends ChangeNotifier {
     await _commit(_workspace.copyWith(theme: theme));
   }
 
+  Future<void> setBasemap(BasemapSettings settings) async {
+    if (settings.validationKey case final key?) throw FormatException(key);
+    await _commit(_workspace.copyWith(basemap: settings));
+  }
+
+  Future<void> setRouting(RoutePlanningSettings settings) async {
+    if (settings.validationKey case final key?) throw FormatException(key);
+    await _commit(_workspace.copyWith(routing: settings));
+  }
+
   Future<void> saveTerminal(TerminalConfig config) async {
     if (config.validationKey case final key?) throw FormatException(key);
     if (runtime(config.id).busy) {
@@ -157,6 +167,9 @@ class SimulatorController extends ChangeNotifier {
           taskRuntimes[t.id]?.phase == TaskPhase.running,
     )) {
       throw const FormatException('stop_before_edit');
+    }
+    if (value.planning?.isValid == false) {
+      throw const FormatException('routing_points');
     }
     RoutePlayer(
       value,
