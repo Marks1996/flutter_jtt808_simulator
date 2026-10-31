@@ -1,13 +1,13 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
-project(flutter_jtt808_simulator LANGUAGES CXX)
+project(JT808Simulator LANGUAGES CXX)
 
 # Plugin sources use UTF-8 regardless of the Windows system code page.
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "flutter_jtt808_simulator")
+set(BINARY_NAME "JT808Simulator")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

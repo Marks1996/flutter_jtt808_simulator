@@ -17,7 +17,7 @@ fvm flutter run -d macos
 fvm flutter build macos --debug
 ```
 
-应用构建产物：`build/macos/Build/Products/Debug/flutter_jtt808_simulator.app`。首次访问局域网平台时按系统提示授权；默认测试地址为 `127.0.0.1:7100`。
+应用构建产物：`build/macos/Build/Products/Debug/JT808Simulator.app`。首次访问局域网平台时按系统提示授权；默认测试地址为 `127.0.0.1:7100`。
 
 ## Android
 

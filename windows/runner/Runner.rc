@@ -92,9 +92,9 @@ BEGIN
             VALUE "CompanyName", "com.marks" "\0"
             VALUE "FileDescription", "JT/T808 模拟器" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "flutter_jtt808_simulator" "\0"
+            VALUE "InternalName", "JT808Simulator" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.marks. All rights reserved." "\0"
-            VALUE "OriginalFilename", "flutter_jtt808_simulator.exe" "\0"
+            VALUE "OriginalFilename", "JT808Simulator.exe" "\0"
             VALUE "ProductName", "JT/T808 模拟器" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
